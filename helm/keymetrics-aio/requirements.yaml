@@ -1,0 +1,16 @@
+dependencies:
+- name: redis
+  version: "0.10.2"
+  repository: "https://kubernetes-charts.storage.googleapis.com/"
+  # https://github.com/kubernetes/charts/tree/master/stable/redis
+  condition: use_embedded_redis
+- name: mongodb
+  version: "0.4.18"
+  repository: "https://kubernetes-charts.storage.googleapis.com/"
+  # https://github.com/kubernetes/charts/tree/master/stable/mongodb
+  condition: use_embedded_mongodb
+- name: elasticsearch
+  version: "0.4.1"
+  repository: "http://storage.googleapis.com/kubernetes-charts-incubator"
+  # https://github.com/kubernetes/charts/tree/master/incubator/elasticsearch
+  condition: use_embedded_elasticsearch
