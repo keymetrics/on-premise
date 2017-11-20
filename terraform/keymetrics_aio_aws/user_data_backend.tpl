@@ -16,18 +16,25 @@ SMTP_SENDER="${smtp_sender}"
 
 EOF
 
-while read in;
-do echo "Settings $in" && export $in;
-done < /etc/environment
+export KM_ELASTICSEARCH_HOST="http://${es_private_id}:9200/"
+export KM_MONGO_URL="mongodb://${mongodb_private_id}/keymetrics"
+export KM_REDIS_URL="redis://${redis_private_ip}/"
+export KM_DEDICATED_KEY="${keymetrics_key}"
+export KM_SITE_URL="http://${backend_public_ip}"
+export SMTP_USER="${smtp_username}"
+export SMTP_PASSWORD="${smtp_password}"
+export SMTP_HOST="${smtp_host}"
+export SMTP_SENDER="${smtp_sender}"
 
 sed -i "s/NODE_ENV='production'/NODE_ENV='dedicated'/g" /home/ubuntu/.bashrc
 
 chown -R ubuntu:ubuntu /home/ubuntu
 
 export PM2_HOME=/home/ubuntu/.pm2
-pm2 reload all --update-env
-pm2 reset all
+
+pm2 restart all --update-env
 pm2 flush
+pm2 reset all
 pm2 save
 
 curl https://s3.amazonaws.com/aws-cloudwatch/downloads/latest/awslogs-agent-setup.py -O
