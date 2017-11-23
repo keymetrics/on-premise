@@ -22,6 +22,7 @@ resource "aws_instance" "elasticsearch" {
 
   lifecycle {
     create_before_destroy = true
+    ignore_changes = ["ami"]
   }
   
   security_groups = ["${aws_security_group.elasticsearch.name}"]
@@ -43,6 +44,7 @@ resource "aws_instance" "mongodb" {
 
   lifecycle {
     create_before_destroy = true
+    ignore_changes = ["ami"]
   }
   
   security_groups = ["${aws_security_group.mongodb.name}"]
