@@ -6,6 +6,8 @@ Documentation about how to deploy the keymetrics on-premise version on AWS
 
 In the following examples, we assume that you already have a fully working Terraform project. You can follow the [`Getting Started`](https://www.terraform.io/intro/getting-started/install.html) guide on the official website [here](https://www.terraform.io/intro/getting-started/install.html).
 
+## Setup steps
+
 ### 1. Adding the module to your terraform project
 
 There's two options available in order to use our terraform module in your project. 
@@ -91,3 +93,40 @@ Run `terraform plan -target=module.example_keymetrics_setup -out tfout` and make
 
 You can then run `terraform apply tfout` in order to make terraform created the infrastructure on your AWS Account.
 
+## Extra configuration depending of your own existing infrastructure
+
+### Add a sub-domain pointing to Keymetrics instance
+
+By default, Keymetrics instance is using an ElasticIP to be publicly available to its users. If you want to use it with a domain, you __first__ need to set `public_host_address` variable to the domain to use and then create a `A` record pointing to its public ElasticIP.
+
+*__Warning: Once deployed with either the public IP or a domain, it's not possible to change it without fully dropping the mongodb database.__*
+
+### Allow your apps to connect to Keymetrics APIs
+
+By default, Keymetrics instance only accept connection on port `80/tcp` from `0.0.0.0/32`. In order to let your applications talk with the Keymetrics backend, you need to allow their security groups to connected to Keymetrics instance on port `3900/tcp`, `3010/tcp`, `4010/tcp` and `43554/tcp`.
+
+To do so, you can use the module output value named `backend_securitygroup_name` as `security_group_id` of a Terraform [aws_security_group_rule](https://www.terraform.io/docs/providers/aws/r/security_group_rule.html)
+
+Example: 
+```
+module "example_keymetrics_setup" {
+  source  = "keymetrics_aio_aws"
+  ...
+}
+
+# Allow connection from 
+resource "aws_security_group_rule" "allow_port_3900" {
+  type                     = "ingress"
+  from_port                = 3900
+  to_port                  = 3900
+  protocol                 = "tcp"
+  
+  # Your application security group
+  source_security_group_id = "sg-123456" 
+ 
+  # Keymetrics Backend Security Group
+  security_group_id = "${module.example_keymetrics_setup.backend_securitygroup_name}"
+}
+
+...
+```
