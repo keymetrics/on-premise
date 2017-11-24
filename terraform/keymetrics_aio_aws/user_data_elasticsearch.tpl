@@ -19,6 +19,11 @@ apt-get install -y oracle-java8-installer
 
 systemctl enable elasticsearch.service
 
+MACHINE_MEMORY_RAW=$(cat /proc/meminfo | grep MemTotal | awk 'match($0, /[a-zA-Z]*\:(.*)/) {print substr($2, RSTART, RLENGTH) }')
+echo "Current machine memory:" $MACHINE_MEMORY_RAW "kB"
+JAVA_MEMORY_TO_USER=$(awk "BEGIN {print $MACHINE_MEMORY_RAW / 2000}" | cut -d'.' -f 1)
+echo "System memory to allocate for Java:" $JAVA_MEMORY_TO_USER "m"
+
 cat <<EOF >> /etc/elasticsearch/elasticsearch.yml
 
 cluster.name: ${cluster_name}
@@ -28,5 +33,9 @@ network.host: 0.0.0.0
 http.port: 9200
 
 EOF
+
+MEMORY_WITH_UNIT="$${JAVA_MEMORY_TO_USER}m"
+
+echo "ES_JAVA_OPTS=\"-Xms$MEMORY_WITH_UNIT -Xmx$MEMORY_WITH_UNIT\"" >> /etc/default/elasticsearch
 
 service elasticsearch restart
