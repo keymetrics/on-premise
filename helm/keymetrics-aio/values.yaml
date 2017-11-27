@@ -28,7 +28,7 @@ km_smtp_user: postmaster@example.com
 km_smtp_pass: XXXXXXX
 km_smtp_sender: sender@example.com
 
-km_public_dns: http://keymetrics.example.com
+km_public_dns: keymetrics.example.com
 
 redis:
   usePassword: false
