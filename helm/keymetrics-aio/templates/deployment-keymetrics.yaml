@@ -54,7 +54,7 @@ spec:
         - name: SMTP_SENDER
           value: {{ .Values.km_smtp_sender }}
         - name: KM_SITE_URL
-          value: {{ .Values.km_public_dns }}
+          value: http://{{ .Values.km_public_dns }}
         - name: KM_DEDICATED_KEY
           value: {{ .Values.km_license }}
         image: keymetrics/km-api:dedicated
