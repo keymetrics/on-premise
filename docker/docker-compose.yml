@@ -1,0 +1,58 @@
+version: '2'
+
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes_from:
+      - km-front
+    links:
+      - km-api:km-api
+    environment:
+      - NGINX_PORT=80
+      
+  elasticsearch:
+    image: elasticsearch:5.5
+    volumes:
+      - "esdata:/usr/share/elasticsearch/data"
+
+  mongodb:
+    image: mongo:3.4
+    volumes:
+      - "mongodata:/data/db"
+      
+  redis:
+    image: redis:3.0
+      
+  km-api:
+    image: keymetrics/km-api-dedicated:latest
+    hostname: km-api
+    ports:
+      - 3900:3900
+      - 43554:43554
+    links:
+      - redis
+      - elasticsearch
+      - mongodb
+    environment:
+      KM_ELASTICSEARCH_HOST: elasticsearch:9200
+      KM_ELASTIC_VERSION: '5.5'
+      KM_MONGO_URL: mongodb://mongodb:27017/keymetrics
+      KM_REDIS_URL: redis://redis:6379
+      KM_SMTP_HOST: smtp.mailgun.org
+      KM_SMTP_PASSWORD: YOUR_PASSWORD
+      KM_SMTP_USER: postmaster@your-domain.tld
+      KM_SMTP_SENDER: you@your-domain.tld
+      KM_SITE_URL: "http://your-domain.tld"
+      NODE_ENV: dedicated
+      PM2_MACHINE_NAME: km-keymetrics
+      KM_DEDICATED_KEY: YOUR_LICENSE
+      
+  km-front:
+    image: keymetrics/km-front-dedicated:latest
+    restart: "no"
+    
+volumes:
+  esdata:
+  mongodata:
