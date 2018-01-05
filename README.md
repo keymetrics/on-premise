@@ -7,7 +7,7 @@
 ## Before Provisioning
 
 1. Create an account on [https://enterprise.keymetrics.io/](https://enterprise.keymetrics.io/)
-1. Send your email address you registered with and your [provider informations](https://github.com/keymetrics/on-premise/blob/master/docs/provider.md) to aris@keymetrics.io
+1. Send your email address you registered with and your [provider informations](https://github.com/keymetrics/on-premise/blob/master/docs/PROVIDERS.md) to aris@keymetrics.io
 1. Then you will receive the License by email after validation and you will be ready to provision PM2 EE
 
 ## Provisioning
