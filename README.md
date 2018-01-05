@@ -10,7 +10,7 @@
 1. Send your email address you registered with and your [provider informations](https://github.com/keymetrics/on-premise/blob/master/docs/provider.md) to aris@keymetrics.io
 1. Then you will receive the License by email after validation and you will be ready to provision PM2 EE
 
-## Provisioning Methods
+## Provisioning
 
 Provisioning PM2 EE Monitoring:
 - [On Amazon AWS with Terraform](https://github.com/keymetrics/on-premise/blob/master/docs/AWS.md)
@@ -21,7 +21,7 @@ Specific documentation: [here](https://github.com/keymetrics/on-premise/blob/mas
 
 ## After Provisioning
 
-Go to your own public PM2 EE address, then create an account and you are ready to go.
+Go to your the public address that you configured when you did the priovisioning, then create an account and you are ready to go.
 
 ## Any issues?
 
