@@ -23,6 +23,14 @@ Specific documentation: [here](https://github.com/keymetrics/on-premise/blob/mas
 
 Go to your the public address that you configured when you did the priovisioning, then create an account and you are ready to go.
 
+## Updating
+###### AWS
+If you deployed with terraform (and we encourage you to so), you should be able to use `terraform apply`, it will automaticly get the latest AMI and if needed, update the running instance.
+###### Docker
+If you deployed with Docker, you will just need to restart with the `docker-compose.yml` file and it will automacitly pull the newest image from the docker hub
+###### Other
+If you want some advises on how to update if you deployed it yourself as you wanted, you can ask us at tech@keymetrics.io or on slack
+
 ## Any issues?
 
 - Slack: [https://keymetrics-team.slack.com/](https://keymetrics-team.slack.com/)
