@@ -28,15 +28,32 @@ spec:
         name: {{ template "keymetrics-aio.fullname" . }}
     spec:
       containers:
-      - image: rohja/km-nginx:latest
+      - image: keymetrics/km-front-dedicated:latest
         imagePullPolicy: Always
-        name: nginx
+        name: km-front
         resources: {}
         securityContext:
           privileged: false
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
-      - env:
+        command: ["/entrypoint_k8s.sh"]
+        volumeMounts:
+          - mountPath: /nginx
+            name: nginx-config
+          - mountPath: /assets
+            name: www-data
+      - image: keymetrics/km-api-dedicated:latest
+        imagePullPolicy: IfNotPresent
+        name: km-api
+        resources: {}
+        securityContext:
+          privileged: false
+        ports:
+          - containerPort: 3010
+          - containerPort: 4010
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        env:
         - name: KM_ELASTICSEARCH_HOST
           value: {{ if .Values.use_embedded_elasticsearch }}{{ .Release.Name }}-elasticsearch-master.{{ .Release.Namespace }}:9200{{ else }}{{ .Values.km_elasticsearch_host }}{{ end }}
         - name: KM_MONGO_URL
@@ -45,34 +62,43 @@ spec:
           value: redis://{{ if .Values.use_embedded_redis }}{{ .Release.Name }}-redis.{{ .Release.Namespace }}:6379{{ else }}{{ .Values.km_redis_host }}{{ end }}
         - name: NODE_ENV
           value: dedicated
-        - name: SMTP_HOST
+        - name: KM_SMTP_HOST
           value: {{ .Values.km_smtp_host }}
-        - name: SMTP_USER
+        - name: KM_SMTP_USER
           value: {{ .Values.km_smtp_user }}
-        - name: SMTP_PASSWORD
+        - name: KM_SMTP_PASSWORD
           value: {{ .Values.km_smtp_pass }}
-        - name: SMTP_SENDER
+        - name: KM_SMTP_SENDER
           value: {{ .Values.km_smtp_sender }}
         - name: KM_SITE_URL
           value: http://{{ .Values.km_public_dns }}
         - name: KM_DEDICATED_KEY
           value: {{ .Values.km_license }}
-        image: keymetrics/km-api:dedicated
-        imagePullPolicy: IfNotPresent
-        name: km-api
-        resources: {}
-        securityContext:
-          privileged: false
-        terminationMessagePath: /dev/termination-log
-        terminationMessagePolicy: File
-      - image: keymetrics/km-front:latest
+      - image: nginx:latest
         imagePullPolicy: Always
-        name: km-front
+        name: nginx
         resources: {}
         securityContext:
           privileged: false
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
+        ports:
+          - containerPort: 80
+        env:
+        - name: NGINX_PORT
+          value: "80"
+        volumeMounts:
+          - mountPath: /etc/nginx/conf.d
+            name: nginx-config
+            readOnly: true
+          - mountPath: /usr/app/app
+            name: www-data
+            readOnly: true
+      volumes:
+        - name: www-data
+          emptyDir: {}
+        - name: nginx-config
+          emptyDir: {}
       dnsPolicy: ClusterFirst
       imagePullSecrets:
       - name: {{ .Values.imagePullSecretsName }}
