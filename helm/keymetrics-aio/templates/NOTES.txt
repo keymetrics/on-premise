@@ -27,17 +27,33 @@
 
 1. Get the LoadBalancer url:
 
-  In your shell run:
+ >> Your cluster use public hostnames:
 
-  kubectl -n {{ .Release.Namespace }} get service {{ .Release.Name }}-keymetrics-aio -ao jsonpath='{@.status.loadBalancer.ingress[0].hostname}{"\n"}'
+    In your shell run:
 
-  You will get something like:
+    kubectl -n {{ .Release.Namespace }} get service {{ .Release.Name }}-keymetrics-aio -ao jsonpath='{@.status.loadBalancer.ingress[0].hostname}{"\n"}'
 
-  a521857686094937474950606096fde2-302342861.eu-west-1.elb.amazonaws.com
+    You will get something like:
+ 
+    a5s567s5342-302342861.eu-west-1.elb.amazonaws.com
 
-  You then need to create a CNAME record with the following value:
+    You then need to create a CNAME record with the following value:
 
-  {{ .Values.km_public_dns }}   CNAME  a521857686094937474950606096fde2-302342861.eu-west-1.elb.amazonaws.com
+    {{ .Values.km_public_dns }}  CNAME  a5s567s5342-302342861.eu-west-1.elb.amazonaws.com
+
+ >> Your cluster use public IPs:
+  
+    In your shell run:
+
+    kubectl -n {{ .Release.Namespace }} get service {{ .Release.Name }}-keymetrics-aio -ao jsonpath='{@.status.loadBalancer.ingress[0].ip}{"\n"}'
+
+    You will get something like:
+
+    81.82.83.84
+
+    You then need to create a A record with the following value:
+    
+    {{ .Values.km_public_dns }}  A  81.82.83.84
 
 2. Wait for DNS propagation:
 
