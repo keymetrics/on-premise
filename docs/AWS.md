@@ -8,7 +8,7 @@ In the following examples, we assume that you already have a fully working Terra
 
 ## Reference Architecture
 
-By [default](https://github.com/keymetrics/on-premise/blob/master/terraform/keymetrics_aio_aws/variables.tf) the Terraform script will provision the following instances:
+By [default](https://github.com/keymetrics/on-premise/blob/master/terraform/keymetrics_aio_aws/variables.tf) the Terraform script will provision the following instances type:
 
 - c4.xlarge for the Keymetrics Backend
 - r3.xlarge for the Elasticsearch Database
