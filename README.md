@@ -14,7 +14,8 @@
 
 Provisioning PM2 EE Monitoring:
 - [On Amazon AWS with Terraform](https://github.com/keymetrics/on-premise/blob/master/docs/AWS.md)
-- [On Kubernetes with HELM]() (WIP)
+- [On Kubernetes with HELM](https://github.com/keymetrics/on-premise/blob/master/docs/HELM.md)
+- [On GCP with Terraform](https://github.com/keymetrics/on-premise/blob/master/docs/GCP.md)
 - [On Baremetal servers]() (WIP)
 
 Specific documentation: [here](https://github.com/keymetrics/on-premise/blob/master/docs/BACKEND.md)
