@@ -1,6 +1,6 @@
-## Keymetrics deployment on AWS
+## PM2 EE deployment on AWS
 
-Documentation about how to deploy the keymetrics on-premise version on AWS
+Documentation about how to deploy the PM2 EE on-premise version on AWS
 
 ### Requirements
 
