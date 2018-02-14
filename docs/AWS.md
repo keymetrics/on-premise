@@ -6,6 +6,17 @@ Documentation about how to deploy the keymetrics on-premise version on AWS
 
 In the following examples, we assume that you already have a fully working Terraform project. You can follow the [`Getting Started`](https://www.terraform.io/intro/getting-started/install.html) guide.
 
+## Reference Architecture
+
+By [default](https://github.com/keymetrics/on-premise/blob/master/terraform/keymetrics_aio_aws/variables.tf) the Terraform script will provision the following instances:
+
+- c4.xlarge for the Keymetrics Backend
+- r3.xlarge for the Elasticsearch Database
+- t2.micro for the Redis Database
+- t2.micro for the MongoDB Database
+
+These instances type can be changed via the [custom terraform variable file](https://github.com/keymetrics/on-premise/blob/master/docs/AWS.md#2-set-the-module-variables)
+
 ## Setup steps
 
 ### 1. Adding the module to your terraform project
