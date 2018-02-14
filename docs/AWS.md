@@ -4,7 +4,7 @@ Documentation about how to deploy the keymetrics on-premise version on AWS
 
 ### Requirements
 
-In the following examples, we assume that you already have a fully working Terraform project. You can follow the [`Getting Started`](https://www.terraform.io/intro/getting-started/install.html) guide on the official website [here](https://www.terraform.io/intro/getting-started/install.html).
+In the following examples, we assume that you already have a fully working Terraform project. You can follow the [`Getting Started`](https://www.terraform.io/intro/getting-started/install.html) guide.
 
 ## Setup steps
 
@@ -17,13 +17,13 @@ There's two options available in order to use our terraform module in your proje
 ##### Without cloning the repository
 
 When defining your module definition, use the following `source` value:
-- `git@github.com:keymetrics/on-premise.git//terraform/keymetrics_aio_aws`
+- `git@github.com:keymetrics/on-premise.git/terraform/keymetrics_aio_aws`
 
 Example: 
 
 ```
 module "keymetrics" {
-  source  = "git@github.com:keymetrics/on-premise.git//terraform/keymetrics_aio_aws"
+  source  = "git@github.com:keymetrics/on-premise.git/terraform/keymetrics_aio_aws"
   ...
 }
 ```
