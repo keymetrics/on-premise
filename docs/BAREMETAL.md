@@ -24,7 +24,7 @@ $ wget https://raw.githubusercontent.com/keymetrics/on-premise/master/docker/doc
 
 *For full information about the configuration flag, check the related [documentation](https://github.com/keymetrics/on-premise/blob/master/docs/BACKEND.md#keymetrics-core-documentation)*
 
-Once you have configured the docker-compose.yml file, check that everything is working as expected:
+Once you have configured the `docker-compose.yml` file start it:
 
 ```bash
 $ docker-compose up -d
@@ -44,7 +44,7 @@ Just run docker-compose up again and it will pull the latest backend image:
 
 ```bash
 $ docker-compose pull km-api km-front
-$ docket-compose restart km-api km-front
+$ docker-compose restart km-api km-front
 ```
 
 A downtime of around 30 seconds maximum will happen.
