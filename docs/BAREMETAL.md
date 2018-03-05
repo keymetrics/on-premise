@@ -4,7 +4,9 @@
 2. Edit the docker-compose.yml:
 
 `KM_DEDICATED_KEY` with the license key provided
+
 `KM_SMTP_*` with the SMTP informations
+
 `KM_SITE_URL` with the url that will be bound to the backend
 
 Then run the docker-compose.yml file:
