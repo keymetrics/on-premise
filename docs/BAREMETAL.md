@@ -24,20 +24,33 @@ $ wget https://raw.githubusercontent.com/keymetrics/on-premise/master/docker/doc
 
 *For full information about the configuration flag, check the related [documentation](https://github.com/keymetrics/on-premise/blob/master/docs/BACKEND.md#keymetrics-core-documentation)*
 
-Once you have configured the docker-compose.yml file, run it:
+Once you have configured the docker-compose.yml file, check that everything is working as expected:
 
 ```bash
-$ docker-compose up
+$ docker-compose up -d
 ```
 
-*Some ES errors might appears but it's not critical (delay for the backend to connect to ES)*
+Check the logs via:
+
+```bash
+$ docker-compose logs
+```
+
+*In the beginning some ElaticSearch errors might appears but it's not critical (=delay for the backend to connect to ES)*
 
 ## Update Procedure
 
 Just run docker-compose up again and it will pull the latest backend image:
 
 ```bash
-$ docker-compose up
+$ docker-compose pull km-api km-front
+$ docket-compose restart km-api km-front
 ```
 
 A downtime of around 30 seconds maximum will happen.
+
+## FAQ
+
+- *Backend cannot connect to Elasticsearch*: make sure you have a clean docker installation and there are no conflicting networks (docker networks)
+- *Everything is started as expected but I cannot access the interface / I cannot link PM2*: Make sure you have set the right `KM_SITE_URL` because without a proper value PM2 agent will not be able to connect to the Backend
+- *Do I loose the ES/Mongo data on restart?* No, by default, there are local volumes bound to the host
