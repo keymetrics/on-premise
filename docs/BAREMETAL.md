@@ -22,7 +22,9 @@ $ wget https://raw.githubusercontent.com/keymetrics/on-premise/master/docker/doc
 `KM_SMTP_*` with the SMTP informations (for receiving email notification/alerts)<br/>
 `KM_SITE_URL` with the url that will be bound to the backend (or the ip address directly)<br/>
 
-Then run the docker-compose.yml file:
+*For full information about the configuration flag, check the related [documentation](https://github.com/keymetrics/on-premise/blob/master/docs/BACKEND.md#keymetrics-core-documentation)*
+
+Once you have configured the docker-compose.yml file, run it:
 
 ```bash
 $ docker-compose up
