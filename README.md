@@ -22,7 +22,7 @@ Specific documentation: [here](https://github.com/keymetrics/on-premise/blob/mas
 
 ## After Provisioning
 
-Go to your the public address that you configured when you did the priovisioning, then create an account and you are ready to go.
+Go to your the public address that you configured when you did the provisioning (via `KM_SITE_URL`), then create an account and you are ready to go.
 
 ## Updating
 
