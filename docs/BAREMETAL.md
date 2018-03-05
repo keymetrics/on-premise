@@ -10,7 +10,12 @@ $ sudo curl -L https://github.com/docker/compose/releases/download/1.19.0/docker
 
 ## Steps to Install
 
-1. Get the [docker-compose.yml file](https://github.com/keymetrics/on-premise/blob/master/docker/docker-compose.yml)
+1. Get the [docker-compose.yml file:
+
+```bash
+$ wget https://raw.githubusercontent.com/keymetrics/on-premise/master/docker/docker-compose.yml
+```
+
 2. Edit the docker-compose.yml:
 
 `KM_DEDICATED_KEY` with the license key provided<br/>
