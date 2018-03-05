@@ -3,11 +3,9 @@
 1. Get the [docker-compose.yml file](https://github.com/keymetrics/on-premise/blob/master/docker/docker-compose.yml)
 2. Edit the docker-compose.yml:
 
-`KM_DEDICATED_KEY` with the license key provided
-
-`KM_SMTP_*` with the SMTP informations
-
-`KM_SITE_URL` with the url that will be bound to the backend
+`KM_DEDICATED_KEY` with the license key provided<br/>
+`KM_SMTP_*` with the SMTP informations<br/>
+`KM_SITE_URL` with the url that will be bound to the backend<br/>
 
 Then run the docker-compose.yml file:
 
