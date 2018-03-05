@@ -10,7 +10,7 @@ $ sudo curl -L https://github.com/docker/compose/releases/download/1.19.0/docker
 
 ## Steps to Install
 
-1. Get the [docker-compose.yml file:
+1. Get the docker-compose.yml file:
 
 ```bash
 $ wget https://raw.githubusercontent.com/keymetrics/on-premise/master/docker/docker-compose.yml
@@ -19,7 +19,7 @@ $ wget https://raw.githubusercontent.com/keymetrics/on-premise/master/docker/doc
 2. Edit the docker-compose.yml:
 
 `KM_DEDICATED_KEY` with the license key provided<br/>
-`KM_SMTP_*` with the SMTP informations<br/>
+`KM_SMTP_*` with the SMTP informations (for receiving email notification/alerts)<br/>
 `KM_SITE_URL` with the url that will be bound to the backend (or the ip address directly)<br/>
 
 Then run the docker-compose.yml file:
@@ -28,7 +28,7 @@ Then run the docker-compose.yml file:
 $ docker-compose up
 ```
 
-*Some ES errors might appears but it's not critical (time for the backend to connect to ES)*
+*Some ES errors might appears but it's not critical (delay for the backend to connect to ES)*
 
 ## Update Procedure
 
