@@ -16,6 +16,8 @@ $ sudo curl -L https://github.com/docker/compose/releases/download/1.19.0/docker
 $ wget https://raw.githubusercontent.com/keymetrics/on-premise/master/docker/docker-compose.yml
 ```
 
+*This a docker-compose file compatible with the version 2*
+
 2. Edit the docker-compose.yml:
 
 `KM_DEDICATED_KEY` with the license key provided<br/>
