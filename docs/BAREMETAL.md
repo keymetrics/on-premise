@@ -10,6 +10,12 @@ $ sudo curl -L https://github.com/docker/compose/releases/download/1.19.0/docker
 $ sudo chmod +x /usr/local/bin/docker-compose
 ```
 
+Then make sure you have logged in on the hub to be able to pull the private images:
+
+```bash
+$ docker login
+```
+
 ## Steps to Install
 
 1. Get the docker-compose.yml file corresponding to your version:
