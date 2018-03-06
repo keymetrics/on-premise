@@ -17,7 +17,7 @@ $ sudo chmod +x /usr/local/bin/docker-compose
 ```bash
 # Docker compose version 2
 $ wget https://raw.githubusercontent.com/keymetrics/on-premise/master/docker/docker-compose-2.yml
-# Docker compose version 2=3
+# Docker compose version 3
 $ wget https://raw.githubusercontent.com/keymetrics/on-premise/master/docker/docker-compose-3.yml
 ```
 
