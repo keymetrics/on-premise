@@ -54,8 +54,8 @@ $ docker-compose logs
 Just run docker-compose up again and it will pull the latest backend image:
 
 ```bash
-$ docker-compose pull km-api km-front
-$ docker-compose restart km-api km-front
+$ docker-compose -f docker-compose-2.yml pull km-api km-front
+$ docker-compose -f docker-compose-2.yml restart km-api km-front
 ```
 
 A downtime of around 30 seconds maximum will happen.
