@@ -1,0 +1,58 @@
+version: "3.3"
+services:
+  km-nginx:
+    image: nginx:latest
+    volumes:
+      - km-front-conf:/etc/nginx/conf.d:ro
+      - km-front-app:/usr/app/app:ro
+    links:
+      - km-api:km-api
+    ports:
+      - "80:80"
+  elasticsearch:
+    image: elasticsearch:5.5
+    ports:
+      - 9200:9200
+    volumes:
+      - "esdata:/usr/share/elasticsearch/data"
+  mongodb:
+    restart: always
+    image: mongo:3.4
+    volumes:
+      - "mongodata:/data/db"
+  redis:
+    restart: always
+    image: redis:3.0
+  km-api:
+    image: keymetrics/km-api-dedicated:latest
+    hostname: km-api
+    ports:
+      - 3900:3900
+      - 43554:43554
+    links:
+      - redis
+      - elasticsearch
+      - mongodb
+    environment:
+      KM_ELASTICSEARCH_HOST: elasticsearch:9200
+      KM_ELASTIC_VERSION: '5.5'
+      KM_MONGO_URL: mongodb://mongodb:27017/keymetrics
+      KM_REDIS_URL: redis://redis:6379
+      KM_SMTP_HOST: smtp.mailgun.org
+      KM_SMTP_PASSWORD: YOUR_PASSWORD
+      KM_SMTP_USER: postmaster@your-domain.tld
+      KM_SMTP_SENDER: you@your-domain.tld
+      KM_SITE_URL: "http://iota"
+      NODE_ENV: "http://your-domain.tld"
+      PM2_MACHINE_NAME: km-keymetrics
+      KM_DEDICATED_KEY: ""
+    image: keymetrics/km-front-dedicated:latest
+    restart: "no"
+    volumes:
+      - km-front-conf:/etc/nginx/conf.d
+      - km-front-app:/usr/app/app
+volumes:
+  esdata:
+  km-front-conf:
+  km-front-app:
+  mongodata:
