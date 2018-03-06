@@ -10,13 +10,13 @@ $ sudo curl -L https://github.com/docker/compose/releases/download/1.19.0/docker
 
 ## Steps to Install
 
-1. Get the docker-compose.yml file:
+1. Get the docker-compose.yml file corresponding to your version:
 
 ```bash
-$ wget https://raw.githubusercontent.com/keymetrics/on-premise/master/docker/docker-compose.yml
+$ wget https://raw.githubusercontent.com/keymetrics/on-premise/master/docker/docker-compose-2.yml
 ```
 
-*This a docker-compose file compatible with the version 2*
+*This a docker-compose file compatible with the version 2*, for the version 3, you can replace `docker-compose-2.yml` by `docker-compose-3.yml`
 
 2. Edit the docker-compose.yml:
 
@@ -38,7 +38,7 @@ Check the logs via:
 $ docker-compose logs
 ```
 
-*In the beginning some ElaticSearch errors might appears but it's not critical (=delay for the backend to connect to ES)*
+*In the beginning some connections errors might appears but it's not critical (elasticsearch take few seconds to boot so the backend will restart for few seconds then connect when his ready)*
 
 ## Update Procedure
 
