@@ -21,10 +21,7 @@ $ docker login
 1. Get the docker-compose.yml file corresponding to your version:
 
 ```bash
-# Docker compose version 2
-$ wget https://raw.githubusercontent.com/keymetrics/on-premise/master/docker/docker-compose-2.yml
-# Docker compose version 3
-$ wget https://raw.githubusercontent.com/keymetrics/on-premise/master/docker/docker-compose-3.yml
+$ wget https://raw.githubusercontent.com/keymetrics/on-premise/master/docker/docker-compose.yml
 ```
 
 2. Edit the docker-compose.yml:
@@ -38,7 +35,7 @@ $ wget https://raw.githubusercontent.com/keymetrics/on-premise/master/docker/doc
 Once you have configured the `docker-compose.yml` file start it:
 
 ```bash
-$ docker-compose -f docker-compose-2.yml up -d
+$ docker-compose up -d
 ```
 
 Check the logs via:
@@ -54,8 +51,8 @@ $ docker-compose logs
 Just run docker-compose up again and it will pull the latest backend image:
 
 ```bash
-$ docker-compose -f docker-compose-2.yml pull km-api km-front
-$ docker-compose -f docker-compose-2.yml restart km-api km-front
+$ docker-compose pull km-api km-front
+$ docker-compose restart km-api km-front
 ```
 
 A downtime of around 30 seconds maximum will happen.
