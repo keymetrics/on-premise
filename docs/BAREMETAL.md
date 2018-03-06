@@ -4,7 +4,10 @@
 
 Install Docker & Docker compose (minimum required version is 1.19.0):
 
+### Commands to install Docker & Docker compose on Ubuntu
+
 ```bash
+$ sudo wget -qO- https://get.docker.com/ | sh
 $ sudo curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
 $ sudo chmod +x /usr/local/bin/docker-compose
 ```
@@ -30,7 +33,7 @@ $ wget https://raw.githubusercontent.com/keymetrics/on-premise/master/docker/doc
 Once you have configured the `docker-compose.yml` file start it:
 
 ```bash
-$ docker-compose up -d
+$ docker-compose -f docker-compose-2.yml up -d
 ```
 
 Check the logs via:
