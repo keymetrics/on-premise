@@ -15,10 +15,11 @@ $ sudo chmod +x /usr/local/bin/docker-compose
 1. Get the docker-compose.yml file corresponding to your version:
 
 ```bash
+# Docker compose version 2
 $ wget https://raw.githubusercontent.com/keymetrics/on-premise/master/docker/docker-compose-2.yml
+# Docker compose version 2=3
+$ wget https://raw.githubusercontent.com/keymetrics/on-premise/master/docker/docker-compose-3.yml
 ```
-
-*This a docker-compose file compatible with the version 2*, for the version 3, you can replace `docker-compose-2.yml` by `docker-compose-3.yml`
 
 2. Edit the docker-compose.yml:
 
