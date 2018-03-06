@@ -2,9 +2,7 @@
 
 ## Requirements
 
-Install Docker & Docker compose (minimum required version is 1.19.0):
-
-### Commands to install Docker & Docker compose on Ubuntu
+Install Docker & Docker compose (minimum required version is 1.19.0) in your host machine:
 
 ```bash
 $ sudo wget -qO- https://get.docker.com/ | sh
