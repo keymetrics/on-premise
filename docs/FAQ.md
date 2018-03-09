@@ -36,12 +36,12 @@ When you first register, you should have a bucket created automatically, then yo
 ```
 
 You have two way to link your pm2 : 
-    - Connect to the instance where pm2 is and run the command.
-    - If you have container, just add these environements variables :
-        - `KEYMETRICS_PUBLIC`: replace with `identifier_two>`
-        - `KEYMETRICS_SECRET`: replace with `<identifier_one>`
-        - `KEYMETRICS_NODE`: replace with `<your KM_SITE_URL>`
-        - `INSTANCE_NAME`: (optional) replace it if you want your server in keymetrics to have a fixed name
+  - Connect to the instance where pm2 is and run the command.
+  - If you have container, just add these environements variables :
+    - `KEYMETRICS_PUBLIC`: replace with `identifier_two>`
+    - `KEYMETRICS_SECRET`: replace with `<identifier_one>`
+    - `KEYMETRICS_NODE`: replace with `<your KM_SITE_URL>`
+    - `INSTANCE_NAME`: (optional) replace it if you want your server in keymetrics to have a fixed name
 
 Then it should all the instances in the keymetrics frontend in realtime.
 
