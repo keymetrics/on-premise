@@ -60,5 +60,9 @@ A downtime of around 30 seconds maximum will happen.
 ## FAQ
 
 - *Backend cannot connect to Elasticsearch*: make sure you have a clean docker installation and there are no conflicting networks (docker networks)
+
 - *Everything is started as expected but I cannot access the interface / I cannot link PM2*: Make sure you have set the right `KM_SITE_URL` because without a proper value PM2 agent will not be able to connect to the Backend
-- *Do I loose the ES/Mongo data on restart?* No, by default, there are local volumes bound to the host
+
+- *Do I loose the ES/Mongo data on restart?* No, by default, there are local volumes bound to the 
+
+- *I want to use specific version of mongodb/redis/elasticsearch, is this possible ?* No, we currently support mongodb up to 3.4, redis 2/3/4 and elasticsearch 5.5.
