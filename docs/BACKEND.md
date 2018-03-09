@@ -37,7 +37,7 @@ You can find [an example](https://github.com/keymetrics/on-premise/blob/master/t
 You'll need three different databases for the backend to run : 
 
 - **Elasticsearch v5.5** : We use it to store the majority of data that PM2 push to the backend, we have a configuration where we create 1 index per day, no replica, if you need to configure it contact us
-- **MongoDB** : We use it to store users/buckets, no configuration is recommended on our end.
+- **MongoDB** : We use it to store users/buckets, no configuration is recommended on our end (Max version supported is **3.4**).
 - **Redis**: Tested with Redis 3 and 4, no configuration needed too
 
 You are most likely to have problem with Elasticsearch which is the most heavy used datastores, you might wamt to monitor your cluster (depending on how much you push data into it).
