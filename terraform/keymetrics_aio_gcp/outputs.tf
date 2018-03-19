@@ -1,7 +1,7 @@
 # IP
 
 output "backend_public_ip" {
-  value = "${google_compute_address.public_ip.km-public-ip.address}"
+  value = "${google_compute_address.public_ip.address}"
 }
 
 # Firewall
