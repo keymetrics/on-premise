@@ -163,7 +163,7 @@ resource "google_compute_instance" "backend" {
 
   boot_disk {
     initialize_params {
-      image = "${data.google_compute_image.km-api.name}"
+      image = "dedicated-keymetrics/km-api"
     }
   }
 
