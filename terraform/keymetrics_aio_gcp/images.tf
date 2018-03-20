@@ -1,5 +1,6 @@
 data "google_compute_image" "km-api" {
   family = "km-api"
+  project = "dedicated-keymetrics"
 }
 
 data "google_compute_image" "ubuntu" {
