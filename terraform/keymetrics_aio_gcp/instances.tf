@@ -27,7 +27,7 @@ resource "google_compute_instance" "elasticsearch" {
   }
    
   network_interface {
-    network = "default"
+    network = "${var.network_name}"
     access_config = {}
   }
 
@@ -69,7 +69,7 @@ resource "google_compute_instance" "mongodb" {
   }
 
   network_interface {
-    network = "default"
+    network = "${var.network_name}"
     access_config = {}
   }
 
@@ -106,7 +106,7 @@ resource "google_compute_instance" "redis" {
   }
 
   network_interface {
-    network = "default"
+    network = "${var.network_name}"
     access_config = {}
   }
 
@@ -168,7 +168,7 @@ resource "google_compute_instance" "backend" {
   }
 
   network_interface {
-    network = "default"
+    network = "${var.network_name}"
     access_config {
       nat_ip = "${google_compute_address.public_ip.address}"
     }
