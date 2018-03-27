@@ -76,7 +76,7 @@ The following variables are available:
 - **smtp_host**: [*Required*] Hostname of the SMTP server.
 - **smtp_sender**: [*Required*] Email address used to send emails.
 - **network_name**: [*Required*] Name of the GCP Network to use.
-- **public_host_address**: Public domain pointing to Keymetrics HTTP Server (if empty, the public IP will be used).
+- **public_host_address**: Public domain pointing to Keymetrics HTTP Server (if empty, the public IP will be used), need to be formatted with http or https, not just the host.
 - **mongodb_instance_type**: GCP Instance type to use for MongoDB Instance.
 - **elasticsearch_instance_type**: GCP Instance type to use for ElasticSearch Instance.
 - **redis_instance_type**: GCP Instance type to use for Redis Instance.
