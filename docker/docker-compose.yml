@@ -2,11 +2,12 @@ version: '2'
 
 services:
   nginx:
-    image: keymetrics/km-nginx
+    image: keymetrics/km-nginx:dedicated
     restart: always
     ports:
       - "80:80"
     links:
+      - km-wizard
       - km-api
       - km-front
       
@@ -25,6 +26,16 @@ services:
   redis:
     image: redis:3.0
     restart: always
+
+  km-wizard:
+    image: keymetrics/km-wizard-dedicated
+    restart: always
+    links:
+      - redis
+      - mongodb
+    environment:
+      KM_MONGO_URL: mongodb://mongodb:27017/keymetrics
+      KM_REDIS_URL: redis://redis:6379
       
   km-api:
     image: keymetrics/km-api-dedicated:latest
@@ -41,17 +52,11 @@ services:
       KM_ELASTIC_VERSION: '5.5'
       KM_MONGO_URL: mongodb://mongodb:27017/keymetrics
       KM_REDIS_URL: redis://redis:6379
-      KM_SMTP_HOST: smtp.mailgun.org
-      KM_SMTP_PASSWORD: YOUR_PASSWORD
-      KM_SMTP_USER: postmaster@your-domain.tld
-      KM_SMTP_SENDER: you@your-domain.tld
-      KM_SITE_URL: "http://localhost"
-      NODE_ENV: "http://your-domain.tld"
+      NODE_ENV: "dedicated"
       PM2_MACHINE_NAME: km-keymetrics
-      KM_DEDICATED_KEY: 'LICENSE_KEY'
       
   km-front:
-    image: keymetrics/km-front-dedicated:latest
+    image: keymetrics/noex-enterprise:latest
     restart: always
     
 volumes:
