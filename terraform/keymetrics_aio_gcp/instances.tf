@@ -14,7 +14,7 @@ resource "google_compute_instance" "elasticsearch" {
   zone         = "${data.google_compute_zones.available.names[0]}"
 
   tags = ["keymetrics-elasticsearch-${var.environment}", "keymetrics-${var.environment}"]
-  
+
   boot_disk {
     initialize_params {
       image = "${data.google_compute_image.ubuntu.name}"
@@ -22,12 +22,12 @@ resource "google_compute_instance" "elasticsearch" {
   }
 
   attached_disk {
-    source = "${google_compute_disk.elasticsearch_data.name}"
+    source      = "${google_compute_disk.elasticsearch_data.name}"
     device_name = "data"
   }
-   
+
   network_interface {
-    network = "${var.network_name}"
+    network       = "${var.network_name}"
     access_config = {}
   }
 
@@ -37,9 +37,9 @@ resource "google_compute_instance" "elasticsearch" {
   }
 
   metadata_startup_script = "${data.template_file.setup_elasticsearch.rendered}"
-  
+
   service_account {
-    email = "${google_service_account.keymetrics-backend-logs.email}"
+    email  = "${google_service_account.keymetrics-backend-logs.email}"
     scopes = ["cloud-platform"]
   }
 }
@@ -56,7 +56,7 @@ resource "google_compute_instance" "mongodb" {
   zone         = "${data.google_compute_zones.available.names[0]}"
 
   tags = ["keymetrics-mongodb-${var.environment}", "keymetrics-${var.environment}"]
-  
+
   boot_disk {
     initialize_params {
       image = "${data.google_compute_image.ubuntu.name}"
@@ -64,12 +64,12 @@ resource "google_compute_instance" "mongodb" {
   }
 
   attached_disk {
-    source = "${google_compute_disk.mongodb_data.name}"
+    source      = "${google_compute_disk.mongodb_data.name}"
     device_name = "data"
   }
 
   network_interface {
-    network = "${var.network_name}"
+    network       = "${var.network_name}"
     access_config = {}
   }
 
@@ -79,9 +79,9 @@ resource "google_compute_instance" "mongodb" {
   }
 
   metadata_startup_script = "${data.template_file.setup_mongodb.rendered}"
-  
+
   service_account {
-    email = "${google_service_account.keymetrics-backend-logs.email}"
+    email  = "${google_service_account.keymetrics-backend-logs.email}"
     scopes = ["cloud-platform"]
   }
 }
@@ -106,7 +106,7 @@ resource "google_compute_instance" "redis" {
   }
 
   network_interface {
-    network = "${var.network_name}"
+    network       = "${var.network_name}"
     access_config = {}
   }
 
@@ -118,7 +118,7 @@ resource "google_compute_instance" "redis" {
   metadata_startup_script = "${data.template_file.setup_redis.rendered}"
 
   service_account {
-    email = "${google_service_account.keymetrics-backend-logs.email}"
+    email  = "${google_service_account.keymetrics-backend-logs.email}"
     scopes = ["cloud-platform"]
   }
 }
@@ -130,24 +130,16 @@ data "template_file" "setup_backend" {
 
   vars {
     # ElasticSearch Address
-    es_private_ip =  "km-elasticsearch-${var.environment}.${data.google_compute_zones.available.names[0]}.c.${var.project}.internal"
+    es_private_ip = "km-elasticsearch-${var.environment}.${data.google_compute_zones.available.names[0]}.c.${var.project}.internal"
+
     # MongoDB Address
     mongodb_private_ip = "km-mongodb-${var.environment}.${data.google_compute_zones.available.names[0]}.c.${var.project}.internal"
+
     # Redis Address
     redis_private_ip = "km-redis-${var.environment}.${data.google_compute_zones.available.names[0]}.c.${var.project}.internal"
-    # Keymetrics License Key
-    keymetrics_key = "${var.keymetrics_key}"
-    # Backend public IP or domain for HTTP redirections/url generation
-    backend_public_ip = "${var.public_host_address == "" ? google_compute_address.public_ip.address : var.public_host_address}"
+
     # Files to log in CloudWatch Logs
     log_files = "${join(" ", var.pm2_backend_logfiles)}"
-
-    # Use provided SMTP hostname or use AWS SES instead
-    smtp_host = "${var.smtp_host}"
-    # NOTE: If no SMTP hostname is provided, use the IAM User credentials created for SES.
-    smtp_username = "${var.smtp_username}"
-    smtp_password = "${var.smtp_password}"
-    smtp_sender = "${var.smtp_sender}"
 
     # Misc vars
     environment = "${var.environment}"
@@ -163,28 +155,133 @@ resource "google_compute_instance" "backend" {
 
   boot_disk {
     initialize_params {
-      image = "dedicated-keymetrics/km-api"
+      image = "gcr.io/dedicated-keymetrics/km-api:latest"
     }
   }
 
   network_interface {
     network = "${var.network_name}"
+
     access_config {
       nat_ip = "${google_compute_address.public_ip.address}"
     }
   }
 
-  
   metadata {
-    project = "keymetrics"
-    service = "backend"
+    project            = "keymetrics"
+    service            = "backend"
     serial-port-enable = 1
   }
 
   metadata_startup_script = "${data.template_file.setup_backend.rendered}"
 
   service_account {
-    email = "${google_service_account.keymetrics-backend-logs.email}"
+    email  = "${google_service_account.keymetrics-backend-logs.email}"
     scopes = ["cloud-platform"]
+  }
+}
+
+resource "google_compute_instance" "wizard" {
+  name         = "km-wizard-${var.environment}"
+  machine_type = "${var.backend_instance_type}"
+  zone         = "${data.google_compute_zones.available.names[0]}"
+
+  tags = ["keymetrics-wizard-${var.environment}", "keymetrics-${var.environment}"]
+
+  boot_disk {
+    initialize_params {
+      image = "dedicated-keymetrics/km-wizard"
+    }
+  }
+
+  network_interface {
+    network = "${var.network_name}"
+
+    access_config {
+      nat_ip = "${google_compute_address.public_ip.address}"
+    }
+  }
+
+  metadata {
+    project            = "keymetrics"
+    service            = "wizard"
+    serial-port-enable = 1
+  }
+
+  metadata_startup_script = "${data.template_file.setup_backend.rendered}"
+
+  service_account {
+    email  = "${google_service_account.keymetrics-backend-logs.email}"
+    scopes = ["cloud-platform"]
+  }
+}
+
+resource "google_compute_instance" "frontend" {
+  name         = "km-frontend-${var.environment}"
+  machine_type = "${var.backend_instance_type}"
+  zone         = "${data.google_compute_zones.available.names[0]}"
+
+  tags = ["keymetrics-frontend-${var.environment}", "keymetrics-${var.environment}"]
+
+  boot_disk {
+    initialize_params {
+      image = "dedicated-keymetrics/km-front"
+    }
+  }
+
+  network_interface {
+    network = "${var.network_name}"
+
+    access_config {
+      nat_ip = "${google_compute_address.public_ip.address}"
+    }
+  }
+
+  metadata {
+    project            = "keymetrics"
+    service            = "frontend"
+    serial-port-enable = 1
+  }
+
+  service_account {
+    email  = "${google_service_account.keymetrics-backend-logs.email}"
+    scopes = ["cloud-platform"]
+  }
+}
+
+resource "google_compute_url_map" "loadbalancer" {
+  name        = "loadbalancer"
+  description = "balance request between services"
+
+  default_service = "${google_compute_instance.frontend.self_link}"
+
+  path_matcher {
+    name            = "keymetrics"
+    default_service = "${google_compute_instance.frontend.self_link}"
+
+    path_rule {
+      paths   = ["/primus"]
+      service = "${google_compute_instance.backend.self_link}"
+    }
+
+    path_rule {
+      paths   = ["/api/oauth"]
+      service = "${google_compute_instance.backend.self_link}"
+    }
+
+    path_rule {
+      paths   = ["/api"]
+      service = "${google_compute_instance.backend.self_link}"
+    }
+
+    path_rule {
+      paths   = ["/wizard"]
+      service = "${google_compute_instance.wizard.self_link}"
+    }
+
+    path_rule {
+      paths   = ["/interaction"]
+      service = "${google_compute_instance.backend.self_link}"
+    }
   }
 }

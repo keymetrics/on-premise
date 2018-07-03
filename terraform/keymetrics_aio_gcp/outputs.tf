@@ -1,9 +1,3 @@
-# IP
-
-output "backend_public_ip" {
-  value = "${google_compute_address.public_ip.address}"
-}
-
 # Firewall
 
 output "redis_fw_tag_name" {

@@ -53,30 +53,14 @@ Example of module with variables:
 module "example_keymetrics_setup" {
   source  = "keymetrics_aio_gcp"
 
-  keymetrics_key = "...
-
   environment = "example"
-
-  smtp_host = "smtp.mailgun.org"
-  smtp_username = "postmaster@example.com"
-  smtp_password = "XXX"
-  smtp_sender = "keymetrics@example.com"
-  
-  public_host_address = "our-keymetrics-public-subdomain.example.com"
   
   network_name = "default"
 }
 ```
 
 The following variables are available:
-- **keymetrics_key**: [*Required*] Keymetrics License Key.
 - **environment**: [*Required*] The name of your environment (ex: `qa`, `prod`, `prod-1`, etc.).
-- **smtp_username**: [*Required*] Username used to connect to the SMTP server.
-- **smtp_password**: [*Required*] Password used to connect to the SMTP server.
-- **smtp_host**: [*Required*] Hostname of the SMTP server.
-- **smtp_sender**: [*Required*] Email address used to send emails.
-- **network_name**: [*Required*] Name of the GCP Network to use.
-- **public_host_address**: Public domain pointing to Keymetrics HTTP Server (if empty, the public IP will be used), need to be formatted with http or https, not just the host.
 - **mongodb_instance_type**: GCP Instance type to use for MongoDB Instance.
 - **elasticsearch_instance_type**: GCP Instance type to use for ElasticSearch Instance.
 - **redis_instance_type**: GCP Instance type to use for Redis Instance.

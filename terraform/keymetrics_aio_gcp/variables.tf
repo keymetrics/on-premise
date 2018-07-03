@@ -17,36 +17,15 @@ variable "pm2_backend_logfiles" {
     "AXM-NOTIFICATION-error.log",
     "AXM-REALTIME-out.log",
     "AXM-REALTIME-error.log",
-    "AXM-REVERSE-INTERACTION-out.log",
-    "AXM-REVERSE-INTERACTION-error.log",
+    "AXM-OAUTH-out.log",
+    "AXM-OAUTH-error.log",
+    "AXM-PROXY-out.log",
+    "AXM-PROXY-error.log",
+    "AXM-DIGESTERS-out.log",
+    "AXM-DIGESTERS-error.log",
     "AXM-WEB-API-out.log",
     "AXM-WEB-API-error.log"
   ]
-}
-
-variable "public_host_address" {
-  description = "Public DNS record that will point to Keymetric frontend"
-  default = ""
-}
-
-variable "smtp_username" {
-  description = "SMTP Server username to use for sending emails"
-}
-
-variable "smtp_password" {
-  description = "SMTP Server password to use for sending emails"
-}
-
-variable "smtp_host" {
-  description = "SMTP Server hostname to use for sending emails"
-}
-
-variable "smtp_sender" {
-  description = "Email Address used as 'from:' for notifications and post-install message."
-}
-
-variable "keymetrics_key" {
-  description = "Keymetrics key used to validate the instance"
 }
 
 variable "network_name" {

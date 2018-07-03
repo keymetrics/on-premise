@@ -12,7 +12,7 @@ resource "google_compute_firewall" "backend_public_access" {
 
   allow {
     protocol = "tcp"
-    ports    = ["80", "43554"]
+    ports    = ["80", "43554", "3900"]
   }
 
   target_tags = ["keymetrics-backend-${var.environment}"]
