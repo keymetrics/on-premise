@@ -1,0 +1,10 @@
+dependencies:
+- name: redis
+  version: 5.1.0
+  repository: https://kubernetes-charts.storage.googleapis.com/
+- name: elasticsearch
+  version: 1.15.0
+  repository: https://kubernetes-charts.storage.googleapis.com/
+- name: mongodb
+  version: 4.9.1
+  repository: https://kubernetes-charts.storage.googleapis.com/
