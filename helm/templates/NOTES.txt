@@ -1,0 +1,10 @@
+{{- if .Values.ingress.enabled }}
+{{- range .Values.ingress.hosts }}
+1. Configure the application with the wizard:
+  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ . }}{{ $.Values.ingress.path }}/wizard
+2. Signup (first user is administrator)
+  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ . }}{{ $.Values.ingress.path }}/
+{{- end }}
+{{- else }}
+You should use the ingress provided with this chart. Otherwise you know what to do!
+{{- end }}

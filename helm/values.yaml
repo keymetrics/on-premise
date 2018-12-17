@@ -1,0 +1,93 @@
+# Default values for pm2-on-premise.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+imageApi: keymetrics/km-api-dedicated
+imageTagApi: latest
+
+imageFront: keymetrics/noex-enterprise
+imageTagFront: latest
+
+imageWizard: keymetrics/km-wizard-dedicated
+imageTagWizard: latest
+
+pullSecret: regcred
+
+nodeEnv: dedicated
+debug: false
+
+pullPolicy: IfNotPresent
+
+api:
+  name: api
+
+digesters:
+  name: digesters
+
+front:
+  name: front
+
+oauth:
+  name: oauth
+
+proxy:
+  name: proxy
+
+realtime:
+  name: realtime
+
+wizard:
+  name: wizard
+
+service:
+  type: ClusterIP
+
+ingress:
+  enabled: false
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - pm2-on-premise.local
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #  cpu: 100m
+  #  memory: 128Mi
+  # requests:
+  #  cpu: 100m
+  #  memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+
+
+redis:
+  image:
+    tag: 5.0.3-ol-7-r1
+
+mongodb:
+  image:
+    tag: 4.0.3
+  mongodbUsername: km
+  mongodbDatabase: keymetrics
+
+elasticsearch:
+  appVersion: 5.5.3
+  image:
+    tag: 5.5
+    repository: registry.hub.docker.com/library/elasticsearch
