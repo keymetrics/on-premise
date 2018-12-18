@@ -1,8 +1,9 @@
 {{- if .Values.ingress.enabled }}
 {{- range .Values.ingress.hosts }}
-1. Configure the application with the wizard:
+1. Wait for all services to be ready (including databases)
+2. Configure the application with the wizard:
   http{{ if $.Values.ingress.tls }}s{{ end }}://{{ . }}{{ $.Values.ingress.path }}/wizard
-2. Signup (first user is administrator)
+3. Wait 10 seconds then signup (first user is administrator)
   http{{ if $.Values.ingress.tls }}s{{ end }}://{{ . }}{{ $.Values.ingress.path }}/
 {{- end }}
 {{- else }}

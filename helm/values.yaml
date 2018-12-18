@@ -5,7 +5,8 @@
 replicaCount: 1
 
 imageApi: keymetrics/km-api-dedicated
-imageTagApi: latest
+# Tag different (compatibility with Mongo 4)
+imageTagApi: 88c5dcaa3c6caf24b72f9e6fc1242ecd6676942c
 
 imageFront: keymetrics/noex-enterprise
 imageTagFront: latest
@@ -20,6 +21,11 @@ debug: false
 
 pullPolicy: IfNotPresent
 
+
+# All KM microservices
+alertworker:
+  name: alert-worker
+
 api:
   name: api
 
@@ -29,8 +35,17 @@ digesters:
 front:
   name: front
 
+notifications:
+  name: notifications
+
 oauth:
   name: oauth
+
+prometheuscollector:
+  name: prometheus-collector
+
+prometheusexporter:
+  name: prometheus-exporter
 
 proxy:
   name: proxy
@@ -38,8 +53,16 @@ proxy:
 realtime:
   name: realtime
 
+webcheckworker:
+  name: webcheck-worker
+
 wizard:
   name: wizard
+
+zipkincollector:
+  name: zipkin-collector
+
+
 
 service:
   type: ClusterIP
