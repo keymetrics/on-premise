@@ -73,6 +73,19 @@ If release name contains chart name it will be used as a full name.
               value: '5.5'
 {{- end -}}
 
+{{- define "pm2-on-premise.alertworker.fullname" -}}
+{{- if .Values.alertworker.fullnameOverride -}}
+{{- .Values.alertworker.fullnameOverride | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- $name := default .Chart.Name .Values.alertworker.nameOverride -}}
+{{- if contains $name .Release.Name -}}
+{{- printf "%s-%s" .Release.Name .Values.alertworker.name | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- printf "%s-%s-%s" .Release.Name $name .Values.alertworker.name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+
 {{- define "pm2-on-premise.api.fullname" -}}
 {{- if .Values.api.fullnameOverride -}}
 {{- .Values.api.fullnameOverride | trunc 63 | trimSuffix "-" -}}
@@ -112,6 +125,19 @@ If release name contains chart name it will be used as a full name.
 {{- end -}}
 {{- end -}}
 
+{{- define "pm2-on-premise.notifications.fullname" -}}
+{{- if .Values.notifications.fullnameOverride -}}
+{{- .Values.notifications.fullnameOverride | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- $name := default .Chart.Name .Values.notifications.nameOverride -}}
+{{- if contains $name .Release.Name -}}
+{{- printf "%s-%s" .Release.Name .Values.notifications.name | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- printf "%s-%s-%s" .Release.Name $name .Values.notifications.name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+
 {{- define "pm2-on-premise.oauth.fullname" -}}
 {{- if .Values.oauth.fullnameOverride -}}
 {{- .Values.oauth.fullnameOverride | trunc 63 | trimSuffix "-" -}}
@@ -121,6 +147,32 @@ If release name contains chart name it will be used as a full name.
 {{- printf "%s-%s" .Release.Name .Values.oauth.name | trunc 63 | trimSuffix "-" -}}
 {{- else -}}
 {{- printf "%s-%s-%s" .Release.Name $name .Values.oauth.name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+
+{{- define "pm2-on-premise.prometheuscollector.fullname" -}}
+{{- if .Values.prometheuscollector.fullnameOverride -}}
+{{- .Values.prometheuscollector.fullnameOverride | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- $name := default .Chart.Name .Values.prometheuscollector.nameOverride -}}
+{{- if contains $name .Release.Name -}}
+{{- printf "%s-%s" .Release.Name .Values.prometheuscollector.name | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- printf "%s-%s-%s" .Release.Name $name .Values.prometheuscollector.name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+
+{{- define "pm2-on-premise.prometheusexporter.fullname" -}}
+{{- if .Values.prometheusexporter.fullnameOverride -}}
+{{- .Values.prometheusexporter.fullnameOverride | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- $name := default .Chart.Name .Values.prometheusexporter.nameOverride -}}
+{{- if contains $name .Release.Name -}}
+{{- printf "%s-%s" .Release.Name .Values.prometheusexporter.name | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- printf "%s-%s-%s" .Release.Name $name .Values.prometheusexporter.name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 {{- end -}}
 {{- end -}}
@@ -160,6 +212,32 @@ If release name contains chart name it will be used as a full name.
 {{- printf "%s-%s" .Release.Name .Values.wizard.name | trunc 63 | trimSuffix "-" -}}
 {{- else -}}
 {{- printf "%s-%s-%s" .Release.Name $name .Values.wizard.name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+
+{{- define "pm2-on-premise.webcheckworker.fullname" -}}
+{{- if .Values.webcheckworker.fullnameOverride -}}
+{{- .Values.webcheckworker.fullnameOverride | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- $name := default .Chart.Name .Values.webcheckworker.nameOverride -}}
+{{- if contains $name .Release.Name -}}
+{{- printf "%s-%s" .Release.Name .Values.webcheckworker.name | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- printf "%s-%s-%s" .Release.Name $name .Values.webcheckworker.name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+
+{{- define "pm2-on-premise.zipkincollector.fullname" -}}
+{{- if .Values.zipkincollector.fullnameOverride -}}
+{{- .Values.zipkincollector.fullnameOverride | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- $name := default .Chart.Name .Values.zipkincollector.nameOverride -}}
+{{- if contains $name .Release.Name -}}
+{{- printf "%s-%s" .Release.Name .Values.zipkincollector.name | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- printf "%s-%s-%s" .Release.Name $name .Values.zipkincollector.name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 {{- end -}}
 {{- end -}}
