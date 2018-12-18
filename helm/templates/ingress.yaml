@@ -43,6 +43,14 @@ spec:
               servicePort: 3100
             path: /api/oauth
           - backend:
+              serviceName: {{ template "pm2-on-premise.prometheuscollector.fullname" $ }}
+              servicePort: 8081
+            path: /prometheusCollector
+          - backend:
+              serviceName: {{ template "pm2-on-premise.prometheusexporter.fullname" $ }}
+              servicePort: 8082
+            path: /prometheusExporter
+          - backend:
               serviceName: {{ template "pm2-on-premise.proxy.fullname" $ }}
               servicePort: 8080
             path: /interaction
