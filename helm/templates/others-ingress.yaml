@@ -4,14 +4,15 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ $fullName }}
+  name: {{ $fullName }}-others
   labels:
     app: {{ template "pm2-on-premise.name" . }}
     chart: {{ template "pm2-on-premise.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
-{{- with .Values.ingress.annotations }}
   annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+{{- with .Values.ingress.annotations }}
 {{ toYaml . | indent 4 }}
 {{- end }}
 spec:
@@ -31,18 +32,6 @@ spec:
       http:
         paths:
           - backend:
-              serviceName: {{ template "pm2-on-premise.api.fullname" $ }}
-              servicePort: 3000
-            path: /api
-          - backend:
-              serviceName: {{ template "pm2-on-premise.front.fullname" $ }}
-              servicePort: 80
-            path: /
-          - backend:
-              serviceName: {{ template "pm2-on-premise.oauth.fullname" $ }}
-              servicePort: 3100
-            path: /api/oauth
-          - backend:
               serviceName: {{ template "pm2-on-premise.prometheuscollector.fullname" $ }}
               servicePort: 8081
             path: /prometheusCollector
@@ -51,16 +40,8 @@ spec:
               servicePort: 8082
             path: /prometheusExporter
           - backend:
-              serviceName: {{ template "pm2-on-premise.proxy.fullname" $ }}
-              servicePort: 8080
-            path: /interaction
-          - backend:
-              serviceName: {{ template "pm2-on-premise.realtime.fullname" $ }}
-              servicePort: 4010
-            path: /primus
-          - backend:
-              serviceName: {{ template "pm2-on-premise.wizard.fullname" $ }}
-              servicePort: 3000
-            path: /wizard
+              serviceName: {{ template "pm2-on-premise.zipkincollector.fullname" $ }}
+              servicePort: 8083
+            path: /zipkinCollector
   {{- end }}
 {{- end }}
