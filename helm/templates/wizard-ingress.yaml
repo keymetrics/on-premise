@@ -4,15 +4,14 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ $fullName }}-others
+  name: {{ $fullName }}-wizard
   labels:
     app: {{ template "pm2-on-premise.name" . }}
     chart: {{ template "pm2-on-premise.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
 {{- with .Values.ingress.annotations }}
+  annotations:
 {{ toYaml . | indent 4 }}
 {{- end }}
 spec:
@@ -32,16 +31,8 @@ spec:
       http:
         paths:
           - backend:
-              serviceName: {{ template "pm2-on-premise.prometheuscollector.fullname" $ }}
-              servicePort: 8081
-            path: /prometheusCollector
-          - backend:
-              serviceName: {{ template "pm2-on-premise.prometheusexporter.fullname" $ }}
-              servicePort: 8082
-            path: /prometheusExporter
-          - backend:
-              serviceName: {{ template "pm2-on-premise.zipkincollector.fullname" $ }}
-              servicePort: 8083
-            path: /zipkinCollector
+              serviceName: {{ template "pm2-on-premise.wizard.fullname" $ }}
+              servicePort: 3000
+            path: /wizard
   {{- end }}
 {{- end }}

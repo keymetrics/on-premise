@@ -3,6 +3,9 @@
 1. Wait for all services to be ready (including databases)
 2. Configure the application with the wizard:
   http{{ if $.Values.ingress.tls }}s{{ end }}://{{ . }}{{ $.Values.ingress.path }}/wizard
+
+  You must set the WebSocket address (in advanced section) to the correct path/port
+  Example for this config "ws://cl2.km.io:80/interaction/public"
 3. Wait 10 seconds then signup (first user is administrator)
   http{{ if $.Values.ingress.tls }}s{{ end }}://{{ . }}{{ $.Values.ingress.path }}/
 {{- end }}

@@ -43,9 +43,11 @@ oauth:
 
 prometheuscollector:
   name: prometheus-collector
+  enabled: false
 
 prometheusexporter:
   name: prometheus-exporter
+  enabled: false
 
 proxy:
   name: proxy
@@ -61,6 +63,7 @@ wizard:
 
 zipkincollector:
   name: zipkin-collector
+  enabled: false
 
 
 
