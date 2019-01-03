@@ -1,54 +1,44 @@
-## Keymetrics deployment on Kubernetes with Helm
+# PM2 On Premise (Helm chart for K8S)
 
-Documentation about how to deploy the keymetrics on-premise version on Kubernetes using Helm
+PM2 On premise installation for K8S
 
-### Requirements
+## Introduction
+This chart bootstraps a PM2-On-Premise deployment on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
 
-In the following examples, we assume that you already have a fully working Kubernetes cluster with a working installation of Helm.
-To install and learn how to use Helm, you can follow the [Helm Quick Start Guide](https://docs.helm.sh/using_helm/#quickstart).
+## Prerequisites
+- PV provisioner
+- Ingress manager
+- Regcred with read access to **Keymetrics** images
 
-### Setup steps
-
-#### 1. Clone this repository
-
-The first step is to locally clone this git repository:
-
-`git clone https://github.com/keymetrics/on-premise.git km-on-premise`
-
-`cd km-on-premise/helm/`
-
-#### 2. Add the "incubator" repository needed for ElasticSearch chart
-
-Because the ElasticSearch chart isn't a stable chart yet, we need to add its repository to the list of allowed ones.
-
-`helm repo index incubator --url http://storage.googleapis.com/kubernetes-charts-incubator`
-
-#### 3. Install the chart
-
-The automatic installation is done using:
-
-```
-helm install keymetrics-aio --set km_license=<YOUR_LICENSE> \
-                            --set km_public_dns=<YOUR_SUBDOMAIN> \
-                            --set km_smtp_host=<SMTP_ADDRESS> \
-                            --set km_smtp_user=<SMTP_USERNAME> \
-                            --set km_smtp_pass=<SMTP_PASSWORD> \
-                            --set km_smtp_sender=<SMTP_SENDER_ADDRESS>
+## Install the Chart
+```bash
+helm install . --name my-release --set pullSecret=regcred --ingress=true --ingress.hosts[]=
 ```
 
-This will install Keymetrics and its requirements: 
- - [Redis](https://github.com/kubernetes/charts/tree/master/stable/redis
-)
- - [ElasticSearch](https://github.com/kubernetes/charts/tree/master/incubator/elasticsearch)
- - [MongoDB](https://github.com/kubernetes/charts/tree/master/stable/mongodb)
+## Uninstalling the Chart
+To uninstall/delete the `my-release` deployment:
 
-These settings are required:
+```bash
+$ helm delete my-release
+```
 
-- `km_license`: You Keymetrics license key.
-- `km_public_dns`: The public dns record that will be pointing to your Keymetrics instance (needed for requirections).
-- `km_smtp_host`: SMTP Server address.
-- `km_smtp_user`: SMTP Server username.
-- `km_smtp_pass`: SMTP Server password.
-- `km_smtp_sender`: Emails used in "From" field of emails.
+## Configuration
+| Parameter                               | Description                                                                                  | Default                                     |
+| --------------------------------------- | -------------------------------------------------------------------------------------------- | ------------------------------------------- |
+| `imageApi` | API image | `keymetrics/km-api-dedicated` |
+| `imageTagApi` | API image tag | `latest` |
+| `imageFront` | Frontend image | `keymetrics/noex-enterprise` |
+| `imageTagFront` | Front image tag | `latest` |
+| `imageWizard` | Wizard image (used only at installation) | `keymetrics/km-wizard-dedicated` |
+| `imageTagWizard` | Wizard image tag | `latest` |
+| `pullSecret` | Name of docker registry secret | `regcred` |
+| `pullPolicy` | Pull policy of containers | `IfNotPresent` |
+| `nodeEnv` | Environment used for applications | `dedicated` |
+| `ingress.enabled` | Enable ingress controller resource | `false` |
+| `ingress.annotations` | Ingress annotations | {} |
+| `ingress.hosts[0]` | Ingres hostname | `pm2-on-premise.local` |
+| `ingress.tls` | Ingress TLS configuration | `[]` |
+| `debug` | Activate logs | `false` |
 
-Once the installation is done, Helm is going to print a summary of the resources that it created. Make sure to follow the `NOTES` in order to set you DNS correctly and the connect to the web interface.
+
+Databases images are stables one (with hard coded versions)
