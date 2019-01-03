@@ -1,5 +1,6 @@
 1. Create GCE cluster
-At least 3 nodes and 6Gb/Node
+At least 3 nodes and 6Gb/Node,
+disable Google Load Balancer (we'll use Nginx Controller)
 
 2. Create helm user
 ```yaml
@@ -30,7 +31,7 @@ subjects:
 `kubectl --namespace helm create secret docker-registry regcred --docker-server=https://index.docker.io/v1/ --docker-username={{user}} --docker-password={{password}} --docker-email={{email}}`
 
 5. Helm install
-`helm --namespace helm install . --set ingress.enabled=true --set ingress.hosts[0]=cl2.km.io --set pullPolicy=Always --set service.type=NodePort`
+`helm --namespace helm install . --set ingress.enabled=true --set ingress.hosts[0]=cl2.km.io --set pullPolicy=Always`
 
 6. Ingress
 Example with a Nginx DeamonSet (but you can use whatever you want)
