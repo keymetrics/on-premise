@@ -33,7 +33,7 @@ data "template_file" "openapi_spec" {
   template = "${file("${path.module}/openapi_spec.yaml")}"
 
   vars {
-    endpoint_service = "${var.app_name}-${random_id.endpoint-name.hex}.endpoints.${data.google_client_config.current.project}.cloud.goog"
+    endpoint_service = "${local.public_domain}"
     target           = "${google_compute_address.default.address}"
   }
 }
@@ -43,7 +43,7 @@ resource "random_id" "endpoint-name" {
 }
 
 resource "google_endpoints_service" "openapi_service" {
-  service_name   = "${var.app_name}-${random_id.endpoint-name.hex}.endpoints.${data.google_client_config.current.project}.cloud.goog"
+  service_name   = "${local.public_domain}"
   project        = "${data.google_client_config.current.project}"
   openapi_config = "${data.template_file.openapi_spec.rendered}"
 }
@@ -90,10 +90,10 @@ serviceType: ClusterIP
 ingress:
   enabled: true
   hosts:
-    - ${google_endpoints_service.openapi_service.service_name}
+    - ${local.public_domain}
   tls:
   - hosts:
-    - ${google_endpoints_service.openapi_service.service_name}
+    - ${local.public_domain}
     secretName: pm2-endpoint-tls
   annotations:
     kubernetes.io/ingress.class: nginx
@@ -112,5 +112,5 @@ EOF
 
 
 output "endpoint" {
-  value = "https://${google_endpoints_service.openapi_service.service_name}"
+  value = "${local.public_domain}"
 }

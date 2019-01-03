@@ -6,15 +6,12 @@ You might get access to a docker image, a AMI or something else depending on the
 
 In all the case, the procedure to setup it is always the same, you need to inject to it some environement variables, **they are all mandatory** : 
 
-- `KM_DEDICATED_KEY`: the license key given on https://enterprise.keymetrics.io
 - `KM_ELASTICSEARCH_URL` : the url to the elasticsearch server (always need to have the port in the URI), example : 
     - `{elasticsearch_ip}:9200` or `elasticsearch1:9200 elasticsearch2:9200` (it will split by space then give an array to the elasticsearch client) [exact format defined in **hosts** property](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/configuration.html#config-options)
 - `KM_MONGO_URL` : the URI used to connect to mongodb, example:
     - `mongodb://{mongodb_ip}/keymetrics` [docs](https://docs.mongodb.com/manual/reference/connection-string/)
 - `KM_REDIS_URL`: the URI used to connect to redis, example : 
     - `redis://{redis_ip}:6379` [exact format defined in **url** property](https://github.com/NodeRedis/node_redis#options-object-properties)
-- `KM_SITE_URL`: the hostname that will be used to connect to the Keymetrics instance, it need to be known for the frontend and PM2 to work correctly. Example : 
-    - `http://backend.production.keymetrics`, can be a IP however it **absolutly need** to `http://` at the begining
 - `SMTP_USER`: the username used to send email notifications via 3rd party email provider
 - `SMTP_PASSWORD`: the password used to send email notifications via 3rd party email provider
 - `SMTP_SENDER`: : the sender used to send email notifications via 3rd party email provider
