@@ -9,7 +9,7 @@ module "example_keymetrics_setup" {
 
   key_name = "admin"
   vpc_id = "vpc-xxxxxxxx"
-  keymetrics_key = "...
+  keymetrics_key = "..."
 
   environment = "example"
 
