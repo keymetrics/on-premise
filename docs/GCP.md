@@ -1,4 +1,4 @@
-## Keymetrics deployment on GCP
+# Keymetrics deployment on GCP
 
 Documentation about how to deploy the keymetrics on-premise version on GCP
 
@@ -8,72 +8,37 @@ In the following examples, we assume that you already have a fully working Terra
 
 ## Setup steps
 
-### 1. Adding the module to your terraform project
+### 1. Init service account
+https://cloud.google.com/docs/authentication/production
+`export GOOGLE_APPLICATION_CREDENTIALS="/home/user/Downloads/[FILE_NAME].json"`
 
-There's two options available in order to use our terraform module in your project. 
-- Link the module's git repository address in your terraform module definition
-- Clone the repository and set the source variable of your module definiton to the correct path on your drive.
-
-##### Without cloning the repository
-
-When defining your module definition, use the following `source` value:
-- `git@github.com:keymetrics/on-premise.git//terraform/keymetrics_aio_gcp`
-
-Example: 
-
-```
-module "keymetrics" {
-  source  = "git@github.com:keymetrics/on-premise.git//terraform/keymetrics_aio_gcp"
-  ...
-}
+### 2. Add Terraform Helm provider
+```shell
+(
+  set -x; cd "$(mktemp -d)" &&
+  curl -fsSLO "https://github.com/mcuadros/terraform-provider-helm/releases/download/v0.5.1/terraform-provider-helm_v0.5.1_$(uname | tr '[:upper:]' '[:lower:]')_amd64.tar.gz" &&
+  tar -xvf terraform-provider-helm*.tar.gz &&
+  mkdir -p ~/.terraform.d/plugins/ &&
+  mv terraform-provider-helm*/terraform-provider-helm ~/.terraform.d/plugins/
+)
 ```
 
-##### By cloning the repository
-
-Start by cloning the repository in your project directory using the git command:
-- `git clone git@github.com:keymetrics/on-premise.git keymetrics-on-premise`
-
-Define the `kemetrics` module using the relative path.
-Example:
-
-```
-module "keymetrics" {
-  source  = "keymetrics-on-premise/terraform/keymetrics_aio_gcp"
-  ...
-}
-```
-
-### 2. Set the module variables
-
-The variables are set inside the module definition and allow you to chose how the module is going to setup your infrastructe and which external services are going to be used.
-
-Example of module with variables:
-
-```
-module "example_keymetrics_setup" {
-  source  = "keymetrics_aio_gcp"
-
-  environment = "example"
-  
-  network_name = "default"
-}
-```
+### 3. Set the module variables
 
 The following variables are available:
-- **environment**: [*Required*] The name of your environment (ex: `qa`, `prod`, `prod-1`, etc.).
-- **mongodb_instance_type**: GCP Instance type to use for MongoDB Instance.
-- **elasticsearch_instance_type**: GCP Instance type to use for ElasticSearch Instance.
-- **redis_instance_type**: GCP Instance type to use for Redis Instance.
-- **backend_instance_type**: GCP Instance type to use for Backend Instance.
+- **google_project**: [*Required*] Name of your google project
+- **docker_user**: [*Required*] Docker hub username
+- **docker_pw**: [*Required*] Docker password/api key
+- **docker_email**: [*Required*] Docker email/api key
+- **acme_email**: [*Required*] Email for Let's Encrypt certificate request
+- **custom_domain**: Custom host for ingresses
 
 
-For more informations, please check the [`variables.tf`](https://github.com/keymetrics/on-premise/blob/master/terraform/keymetrics_aio_gcp/variables.tf) file in the module
+### 4. `Plan` and `Apply` your changes using the `terraform` command
 
-### 3. `Plan` and `Apply` your changes using the `terraform` command
+Run `terraform plan` and make sure no error shows up in the logs.
 
-Run `terraform plan -target=module.example_keymetrics_setup -out tfout` and make sure no error shows up in the logs.
-
-You can then run `terraform apply tfout` in order to make terraform created the infrastructure on your GCP Project.
+You can then run `terraform apply` in order to make terraform created the infrastructure on your GCP Project.
 
 ## Extra configuration depending of your own existing infrastructure
 
@@ -85,37 +50,48 @@ By default, Keymetrics instance is using an External IP addresses to be publicly
 
 ### Allow your apps to connect to Keymetrics APIs
 
-By default, Keymetrics instance only accept connection on port `80/tcp` from `0.0.0.0/32`. In order to let your applications talk with the Keymetrics backend, you need to allow their security groups to connected to Keymetrics instance on port `3900/tcp`, `3010/tcp`, `4010/tcp` and `43554/tcp`.
+By default, Keymetrics instance only accept connection on port `443/tcp` from `0.0.0.0/32`. In order to let your applications talk with the Keymetrics backend, you need to allow their security groups to connected to Keymetrics instance (proxy) on port `443/tcp`.
 
-To do so, you can use the module output values as target or source of new [Firewall rules](https://www.terraform.io/docs/providers/google/r/compute_firewall.html) :
-- `redis_fw_tag_name`
-- `mongodb_fw_tag_name`
-- `elasticsearch_fw_tag_name`
-- `backend_fw_tag_name`
 
-Example: 
+# GCE K8S manual install
+1. Create GCE cluster
+At least 3 nodes and 6Gb/Node,
+disable Google Load Balancer (we'll use Nginx Controller)
+
+2. Create helm user
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: tiller
+  namespace: kube-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: tiller
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+  - kind: ServiceAccount
+    name: tiller
+    namespace: kube-system
 ```
-module "example_keymetrics_setup" {
-  source  = "keymetrics_aio_gcp"
-  ...
-}
 
-resource "google_compute_firewall" "allow_all_connections_to_km" {
-  name    = "allow_all_connections_to_km"
-  network = "default"
+3. Helm init with serviceaccount
+`helm init --service-account tiller`
 
-  allow {
-    protocol = "icmp"
-  }
+4. Add regcred
+`kubectl --namespace helm create secret docker-registry regcred --docker-server=https://index.docker.io/v1/ --docker-username={{user}} --docker-password={{password}} --docker-email={{email}}`
 
-  allow {
-    protocol = "tcp"
-    ports    = ["80", "3900", "3010", "4010", "43554"]
-  }
+5. Helm install
+`helm --namespace helm install . --set ingress.enabled=true --set ingress.hosts[0]=cl2.km.io --set pullPolicy=Always`
 
-  source_ranges = ["0.0.0.0/0"]
-  target_tags = ["${module.example_keymetrics_setup.backend_fw_tag_name}"]
-}
+6. Ingress
+Example with a Nginx DeamonSet (but you can use whatever you want)
+`helm --namespace nginx install stable/nginx-controller --set controller.kind=DaemonSet --set controller.daemonset.useHostPort=true`
 
-...
-```
+7. DNS
+Configure your DNS to your nodes

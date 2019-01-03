@@ -1,7 +1,3 @@
-#### The register hang or don't redirect me to the application
-
-You need to verify that the `KM_SITE_URL` you configured is the endpoint you use to connect to the frontend. If you modify it, you need to delete the mongodb database afterwards because all the endpoints configurations are stored inside it.
-
 #### What are the services that are used ?
 
 - http API on port 3010 (access the data, configure bucket etc)
@@ -14,13 +10,12 @@ You need to verify that the `KM_SITE_URL` you configured is the endpoint you use
 
 Depending on how you deployed the keymetrics enterprise product, there are different answers : 
  - **Docker** :
-     -  nginx is used to load balance depending on the path, to either the frontend or backend services
+     - nginx is used to load balance depending on the path, to either the frontend or backend services
      - km-front expose the frontend on the port 80
      - km-api expose all the backend services
- - **AWS** : 
-     - Everything is running inside the km-core AMI
  - **GCP** : 
-     - Same as AWS, everything is running inside the km-core API
+     - Same as docker
+     - Wizard application
 
 
 #### I get a error about `Unknown modifier: $pushAll`, what did i miss ?

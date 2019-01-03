@@ -99,3 +99,12 @@ variable "docker_pw" {
 variable "docker_email" {
   description = "password or API token"
 }
+
+locals {
+  public_domain = "${var.custom_domain == "" ? "${var.app_name}-${random_id.endpoint-name.hex}.endpoints.${var.google_project}.cloud.goog" : "${var.custom_domain}" }"
+}
+
+variable "custom_domain" {
+  default = ""
+  description = "public domain to access to KM"
+}
