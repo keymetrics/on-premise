@@ -40,17 +40,6 @@ You have two way to link your pm2 :
 
 Then it should all the instances in the keymetrics frontend in realtime.
 
-#### How should i run pm2 inside my containers to connect to it ? 
+#### How can monitor my apps inside containers without PM2 ?
 
-We advise you to use `pm2-runtime`, it should be a dropin replacement for node inside your images : 
-
-```
-FROM node:8-alpine
-
-RUN npm install -g pm2 2> /dev/null
-[ ... ]
-CMD [ "pm2-runtime", "app.js" ] # note that you can use an ecosystem here too
-```
-
-You can find the flags that you can use [here](https://github.com/Unitech/pm2/blob/master/lib/binaries/Runtime4Docker.js#L17) 
-
+You can use our nodejs agent without PM2, see the documentation there : https://pm2.io/doc/en/enterprise/collector/standalone/
