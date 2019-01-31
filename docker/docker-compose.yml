@@ -60,9 +60,12 @@ services:
     restart: always
     links:
       - redis
+      - elasticsearch
       - mongodb
     command: pm2-runtime src/proxy/app.js
     environment:
+      KM_ELASTICSEARCH_HOST: elasticsearch:9200
+      KM_ELASTIC_VERSION: '5.5'
       KM_MONGO_URL: mongodb://mongodb:27017/keymetrics
       KM_REDIS_URL: redis://redis:6379
       NODE_ENV: "dedicated"
@@ -72,9 +75,12 @@ services:
     restart: always
     links:
       - redis
+      - elasticsearch
       - mongodb
     command: pm2-runtime src/realtime/app.js
     environment:
+      KM_ELASTICSEARCH_HOST: elasticsearch:9200
+      KM_ELASTIC_VERSION: '5.5'
       KM_MONGO_URL: mongodb://mongodb:27017/keymetrics
       KM_REDIS_URL: redis://redis:6379
       NODE_ENV: "dedicated"
@@ -99,9 +105,12 @@ services:
     restart: always
     links:
       - redis
+      - elasticsearch
       - mongodb
     command: pm2-runtime src/oauth/app.js
     environment:
+      KM_ELASTICSEARCH_HOST: elasticsearch:9200
+      KM_ELASTIC_VERSION: '5.5'
       KM_MONGO_URL: mongodb://mongodb:27017/keymetrics
       KM_REDIS_URL: redis://redis:6379
       NODE_ENV: "dedicated"
@@ -126,9 +135,12 @@ services:
     restart: always
     links:
       - redis
+      - elasticsearch
       - mongodb
     command: pm2-runtime src/notifications/app.js
     environment:
+      KM_ELASTICSEARCH_HOST: elasticsearch:9200
+      KM_ELASTIC_VERSION: '5.5'
       KM_MONGO_URL: mongodb://mongodb:27017/keymetrics
       KM_REDIS_URL: redis://redis:6379
       NODE_ENV: "dedicated"
