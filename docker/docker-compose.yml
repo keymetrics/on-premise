@@ -144,6 +144,21 @@ services:
       KM_MONGO_URL: mongodb://mongodb:27017/keymetrics
       KM_REDIS_URL: redis://redis:6379
       NODE_ENV: "dedicated"
+
+  pre-realtime:
+    image: keymetrics/km-api-dedicated:latest
+    restart: always
+    links:
+      - redis
+      - elasticsearch
+      - mongodb
+    command: pm2-runtime src/pre-realtime/app.js
+    environment:
+      KM_ELASTICSEARCH_HOST: elasticsearch:9200
+      KM_ELASTIC_VERSION: '5.5'
+      KM_MONGO_URL: mongodb://mongodb:27017/keymetrics
+      KM_REDIS_URL: redis://redis:6379
+      NODE_ENV: "dedicated"
       
   km-front:
     image: keymetrics/noex-enterprise:latest
