@@ -151,6 +151,19 @@ If release name contains chart name it will be used as a full name.
 {{- end -}}
 {{- end -}}
 
+{{- define "pm2-on-premise.prerealtime.fullname" -}}
+{{- if .Values.prerealtime.fullnameOverride -}}
+{{- .Values.prerealtime.fullnameOverride | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- $name := default .Chart.Name .Values.prerealtime.nameOverride -}}
+{{- if contains $name .Release.Name -}}
+{{- printf "%s-%s" .Release.Name .Values.prerealtime.name | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- printf "%s-%s-%s" .Release.Name $name .Values.prerealtime.name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+
 {{- define "pm2-on-premise.prometheuscollector.fullname" -}}
 {{- if .Values.prometheuscollector.fullnameOverride -}}
 {{- .Values.prometheuscollector.fullnameOverride | trunc 63 | trimSuffix "-" -}}

@@ -41,6 +41,9 @@ notifications:
 oauth:
   name: oauth
 
+prerealtime:
+  name: prerealtime
+
 prometheuscollector:
   name: prometheus-collector
   enabled: false
