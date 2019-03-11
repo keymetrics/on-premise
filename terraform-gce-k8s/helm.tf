@@ -2,6 +2,11 @@ variable "helm_version" {
   default = "v2.9.1"
 }
 
+data "helm_repository" "stable" {
+  name = "stable"
+  url  = "https://kubernetes-charts.storage.googleapis.com"
+}
+
 variable "app_name" {
   default = "pm2-on-premise"
 }
