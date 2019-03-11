@@ -6,7 +6,7 @@ replicaCount: 1
 
 imageApi: keymetrics/km-api-dedicated
 # Tag different (compatibility with Mongo 4)
-imageTagApi: 88c5dcaa3c6caf24b72f9e6fc1242ecd6676942c
+imageTagApi: latest
 
 imageFront: keymetrics/noex-enterprise
 imageTagFront: latest
