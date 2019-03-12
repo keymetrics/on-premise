@@ -105,6 +105,8 @@ affinity: {}
 
 
 
+createDatabases: true
+
 redis:
   image:
     tag: 5.0.3-ol-7-r1
