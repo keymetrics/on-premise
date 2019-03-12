@@ -1,0 +1,171 @@
+version: '2'
+
+services:
+  nginx:
+    image: keymetrics/km-nginx:dedicated
+    restart: always
+    ports:
+      - "443:443"
+    links:
+      - km-wizard
+      - api
+      - proxy
+      - oauth
+      - realtime
+      - km-front
+    volumes:
+      - "/etc/ssl:/etc/ssl"
+      
+  elasticsearch:
+    image: elasticsearch:5.5
+    restart: always
+    volumes:
+      - "esdata:/usr/share/elasticsearch/data"
+
+  mongodb:
+    image: mongo:3.4
+    restart: always
+    volumes:
+      - "mongodata:/data/db"
+      
+  redis:
+    image: redis:5.0
+    restart: always
+
+  km-wizard:
+    image: keymetrics/km-wizard-dedicated
+    restart: always
+    links:
+      - redis
+      - mongodb
+    environment:
+      KM_MONGO_URL: mongodb://mongodb:27017/keymetrics
+      KM_REDIS_URL: redis://redis:6379
+      
+  api:
+    image: keymetrics/km-api-dedicated:latest
+    restart: always
+    links:
+      - redis
+      - elasticsearch
+      - mongodb
+    command: pm2-runtime src/api/app.js
+    environment:
+      KM_ELASTICSEARCH_HOST: elasticsearch:9200
+      KM_ELASTIC_VERSION: '5.5'
+      KM_MONGO_URL: mongodb://mongodb:27017/keymetrics
+      KM_REDIS_URL: redis://redis:6379
+      NODE_ENV: "dedicated"
+
+  proxy:
+    image: keymetrics/km-api-dedicated:latest
+    restart: always
+    links:
+      - redis
+      - elasticsearch
+      - mongodb
+    command: pm2-runtime src/proxy/app.js
+    environment:
+      KM_ELASTICSEARCH_HOST: elasticsearch:9200
+      KM_ELASTIC_VERSION: '5.5'
+      KM_MONGO_URL: mongodb://mongodb:27017/keymetrics
+      KM_REDIS_URL: redis://redis:6379
+      NODE_ENV: "dedicated"
+
+  realtime:
+    image: keymetrics/km-api-dedicated:latest
+    restart: always
+    links:
+      - redis
+      - elasticsearch
+      - mongodb
+    command: pm2-runtime src/realtime/app.js
+    environment:
+      KM_ELASTICSEARCH_HOST: elasticsearch:9200
+      KM_ELASTIC_VERSION: '5.5'
+      KM_MONGO_URL: mongodb://mongodb:27017/keymetrics
+      KM_REDIS_URL: redis://redis:6379
+      NODE_ENV: "dedicated"
+
+  digesters:
+    image: keymetrics/km-api-dedicated:latest
+    restart: always
+    links:
+      - redis
+      - elasticsearch
+      - mongodb
+    command: pm2-runtime src/digesters/app.js
+    environment:
+      KM_ELASTICSEARCH_HOST: elasticsearch:9200
+      KM_ELASTIC_VERSION: '5.5'
+      KM_MONGO_URL: mongodb://mongodb:27017/keymetrics
+      KM_REDIS_URL: redis://redis:6379
+      NODE_ENV: "dedicated"
+
+  oauth:
+    image: keymetrics/km-api-dedicated:latest
+    restart: always
+    links:
+      - redis
+      - elasticsearch
+      - mongodb
+    command: pm2-runtime src/oauth/app.js
+    environment:
+      KM_ELASTICSEARCH_HOST: elasticsearch:9200
+      KM_ELASTIC_VERSION: '5.5'
+      KM_MONGO_URL: mongodb://mongodb:27017/keymetrics
+      KM_REDIS_URL: redis://redis:6379
+      NODE_ENV: "dedicated"
+
+  alert-worker:
+    image: keymetrics/km-api-dedicated:latest
+    restart: always
+    links:
+      - redis
+      - elasticsearch
+      - mongodb
+    command: pm2-runtime src/alert-worker/app.js
+    environment:
+      KM_ELASTICSEARCH_HOST: elasticsearch:9200
+      KM_ELASTIC_VERSION: '5.5'
+      KM_MONGO_URL: mongodb://mongodb:27017/keymetrics
+      KM_REDIS_URL: redis://redis:6379
+      NODE_ENV: "dedicated"
+
+  notification:
+    image: keymetrics/km-api-dedicated:latest
+    restart: always
+    links:
+      - redis
+      - elasticsearch
+      - mongodb
+    command: pm2-runtime src/notifications/app.js
+    environment:
+      KM_ELASTICSEARCH_HOST: elasticsearch:9200
+      KM_ELASTIC_VERSION: '5.5'
+      KM_MONGO_URL: mongodb://mongodb:27017/keymetrics
+      KM_REDIS_URL: redis://redis:6379
+      NODE_ENV: "dedicated"
+
+  pre-realtime:
+    image: keymetrics/km-api-dedicated:latest
+    restart: always
+    links:
+      - redis
+      - elasticsearch
+      - mongodb
+    command: pm2-runtime src/pre-realtime/app.js
+    environment:
+      KM_ELASTICSEARCH_HOST: elasticsearch:9200
+      KM_ELASTIC_VERSION: '5.5'
+      KM_MONGO_URL: mongodb://mongodb:27017/keymetrics
+      KM_REDIS_URL: redis://redis:6379
+      NODE_ENV: "dedicated"
+      
+  km-front:
+    image: keymetrics/noex-enterprise:latest
+    restart: always
+    
+volumes:
+  esdata:
+  mongodata:
