@@ -39,34 +39,54 @@ If release name contains chart name it will be used as a full name.
 {{- define "pm2-on-premise.fullenv" -}}
             - name: NODE_ENV
               value: {{ .Values.nodeEnv }}
-            {{ if .Values.debug }}
+{{ if .Values.debug }}
             - name: DEBUG
               value: '*'
-            {{ end }}
+{{ end }}
             - name: MONGO_HOST
+{{ if .Values.mongodb.mongodbHost }}
+              value: {{ .Values.mongodb.mongodbHost }}
+{{ else }}
               value: {{ template "pm2-on-premise.mongodb.fullname" . }}
+{{ end }}
             - name: MONGODB_USERNAME
               value: {{ .Values.mongodb.mongodbUsername }}
             - name: MONGODB_PASSWORD
+{{ if .Values.mongodb.mongodbPassword }}
+              value: {{ .Values.mongodb.mongodbPassword }}
+{{ else }}
               valueFrom:
                 secretKeyRef:
                   name: {{ template "pm2-on-premise.mongodb.fullname" . }}
                   key: mongodb-password
+{{ end }}
             - name: MONGODB_DATABASE
               value: {{ .Values.mongodb.mongodbDatabase }}
             - name: KM_MONGO_URL
               value: 'mongodb://$(MONGODB_USERNAME):$(MONGODB_PASSWORD)@$(MONGO_HOST):27017/$(MONGODB_DATABASE)'
             - name: REDIS_HOST
+{{ if .Values.redis.redisHost }}
+              value: {{ .Values.redis.redisHost }}
+{{ else }}
               value: {{ template "pm2-on-premise.redis.fullname" . }}-master
+{{ end }}
             - name: REDIS_PASSWORD
+{{ if .Values.redis.redisPassword }}
+              value: {{ .Values.redis.redisPassword }}
+{{ else }}
               valueFrom:
                 secretKeyRef:
                   name: {{ template "pm2-on-premise.redis.fullname" . }}
                   key: redis-password
+{{ end }}
             - name: KM_REDIS_URL
               value: redis://:$(REDIS_PASSWORD)@$(REDIS_HOST):6379
             - name: ES_HOST
+{{ if .Values.elasticsearch.elasticsearchHost }}
+              value: {{ .Values.elasticsearch.elasticsearchHost }}
+{{ else }}
               value: {{ template "pm2-on-premise.elasticsearch.fullname" . }}-client
+{{ end }}
             - name: KM_ELASTICSEARCH_HOST
               value: http://$(ES_HOST):9200
             - name: KM_ELASTIC_VERSION
