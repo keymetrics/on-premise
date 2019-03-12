@@ -3,26 +3,31 @@
 PM2 On premise installation for K8S
 
 ## Introduction
+
 This chart bootstraps a PM2-On-Premise deployment on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
 
 ## Prerequisites
+
 - PV provisioner
 - Ingress manager
 - Regcred with read access to **Keymetrics** images
 
 ## Install the Chart
+
 ```bash
 helm install . --name my-release --set pullSecret=regcred --ingress=true --ingress.hosts[]=
 ```
 
 ## Uninstalling the Chart
+
 To uninstall/delete the `my-release` deployment:
 
 ```bash
-$ helm delete my-release
+helm delete my-release
 ```
 
 ## Configuration
+
 | Parameter                               | Description                                                                                  | Default                                     |
 | --------------------------------------- | -------------------------------------------------------------------------------------------- | ------------------------------------------- |
 | `imageApi` | API image | `keymetrics/km-api-dedicated` |
@@ -38,7 +43,14 @@ $ helm delete my-release
 | `ingress.annotations` | Ingress annotations | {} |
 | `ingress.hosts[0]` | Ingres hostname | `pm2-on-premise.local` |
 | `ingress.tls` | Ingress TLS configuration | `[]` |
+| `createDatabases` | Create databases in cluster | `true` |
+| `mongodb.mongodbUsername`
+| `mongodb.mongodbDatabase`
+| `mongodb.mongodbPassword`
+| `mongodb.mongodbHost`
+| `redis.redisHost`
+| `redis.redisPassword`
+| `elasticsearch.elasticsearchHost`
 | `debug` | Activate logs | `false` |
-
 
 Databases images are stables one (with hard coded versions)

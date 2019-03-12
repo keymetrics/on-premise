@@ -1,0 +1,20 @@
+kind: pipeline
+name: default
+
+steps:
+- name: build
+  image: alpine/helm
+  commands:
+  - apk update
+  - apk add coreutils
+  - cd helm
+  - ./template.sh
+
+- name: publish
+  image: plugins/github-release
+  settings:
+    api_key:
+      from_secret: github_token
+    files: '*'
+  when:
+    event: tag
