@@ -1,0 +1,32 @@
+kind: pipeline
+name: default
+
+steps:
+- name: build
+  image: alpine/helm
+  environment:
+    DOCKER_USERNAME:
+      from_secret: username
+  commands:
+  - env
+  - apk update
+  - apk add coreutils
+  - cd helm
+  - ./template.sh
+
+- name: publish
+  image: plugins/github-release
+  settings:
+    api_key:
+      from_secret: github_token
+    files: '*'
+  when:
+    event: tag
+
+---
+kind: secret
+
+external_data:
+  username:
+    path: secrets/data/drone/docker
+    name: username
