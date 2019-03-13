@@ -2,7 +2,7 @@ version: '2'
 
 services:
   nginx:
-    image: keymetrics/km-nginx:dedicated
+    image: keymetrics/km-nginx:dedicated-ssl
     restart: always
     ports:
       - "443:443"

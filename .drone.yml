@@ -4,9 +4,6 @@ name: default
 steps:
 - name: build
   image: alpine/helm
-  environment:
-    DOCKER_USERNAME:
-      from_secret: username
   commands:
   - env
   - apk update
@@ -25,8 +22,7 @@ steps:
 
 ---
 kind: secret
-
-external_data:
-  username:
-    path: secrets/data/drone/docker
-    name: username
+name: github_token
+get:
+  path: secret/drone/github
+  name: token

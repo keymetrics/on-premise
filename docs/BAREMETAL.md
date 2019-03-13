@@ -37,7 +37,9 @@ Otherwise, download the docker compose with the SSL configured into our nginx in
 wget https://raw.githubusercontent.com/keymetrics/on-premise/master/docker/docker-compose.ssl.yml && mv docker-compose.ssl.yml docker-compose.yml
 ```
 
-Then you will need to place your private certificate on the path `/etc/ssl/certificate.crt` and the private key on the path `/etc/ssl/certificate.key`, both on the host where you are launching the docker-compose file.
+Then you will need to place your private certificate on the path `/etc/ssl/pm2-ssl-certificate.crt` and the private key on the path `/etc/ssl/pm2-ssl-certificate.key`, both on the host where you are launching the docker-compose file.
+
+If you want to use a custom proxy, you can find the nginx configuration that we use [here](https://github.com/keymetrics/on-premise/blob/master/docker/dockerfiles/nginx.conf) to configure the correct redirection for each service.
 
 ###
 
