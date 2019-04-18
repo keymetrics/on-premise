@@ -43,3 +43,8 @@ Then it should all the instances in the keymetrics frontend in realtime.
 #### How can monitor my apps inside containers without PM2 ?
 
 You can use our nodejs agent without PM2, see the documentation there : https://pm2.io/doc/en/enterprise/collector/standalone/
+
+#### How can I disable the wizard?
+
+For your own credentials security, you should stop the wizard container. You can restart it when you want if you need to change the configuration
+`docker-compose stop km-wizard`

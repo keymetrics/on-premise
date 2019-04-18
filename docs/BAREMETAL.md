@@ -72,6 +72,8 @@ You must add the *public address* as `instance_address`. If you want to use a pr
 
 NB: If you used the SSL setup, you must check the advanced configuration in *General/Websocket address* and use `wss` protocol instead of `ws`
 
+NB: When your installation is complete, you should stop the wizard `docker-compose stop km-wizard`
+
 #### Updating Configuration
 
 You can modify the configuration after the first install, but you must restart all the apps manually after changing the configuration
