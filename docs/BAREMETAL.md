@@ -5,6 +5,7 @@
 - [Startup PM2 Enterprise](#startup-pm2-enterprise)
 - [Configure PM2 Enterprise](#configure-pm2-enterprise)
 - [Update PM2 Enterprise](#update-pm2-enterprise)
+- [Connect PM2 Runtime to the On-Premise](#connect-pm2-runtime-to-the-on-premise)
 
 ## Base Requirements
 
