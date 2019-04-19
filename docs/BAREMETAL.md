@@ -105,7 +105,7 @@ docker-compose start km-wizard
 docker-compose restart
 ```
 
-## Updating PM2 Enterprise
+## Update PM2 Enterprise
 
 To get the latest updates, you just have to run docker-compose up again and it will pull the latest backend image:
 
