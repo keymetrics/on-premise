@@ -2,26 +2,11 @@
 
 ![PM2 Enterprise logo](https://pm2.io/_nuxt/img/f0a5c4e.svg)
 
-## Overview
+- [Deploy to VM or Baremetal Machines](https://github.com/keymetrics/on-premise/blob/master/docs/BAREMETAL.md)
+- [Deploy to Kubernetes with Helm](https://github.com/keymetrics/on-premise/blob/master/docs/HELM.md)
+- [Deploy to GKE (Google Cloud Platform Managed Kubernetes) with Terraform & Helm](https://github.com/keymetrics/on-premise/blob/master/docs/GCP.md)
 
-To use PM2 Enterprise on-premise, we provide Docker images containing all of our Application (front-end and back-end).
-
-You only need to create a account on [hub.docker.com](https://hub.docker.com/), we allow this account to pull our images so you can install them in your servers.
-
-If you have any questions :
-
-- Sales: sales@keymetrics.io
-- Technical: tech@keymetrics.io
-
-## Deployments
-
-To make it really easy to deploy our product, we also give you examples to deploy on different infrastructures:
-
-- [Kubernetes with Helm](https://github.com/keymetrics/on-premise/blob/master/docs/HELM.md)
-- [GKE (Google Cloud Platform Managed Kubernetes) with Terraform & Helm](https://github.com/keymetrics/on-premise/blob/master/docs/GCP.md)
-- [Any docker servers with Docker Compose](https://github.com/keymetrics/on-premise/blob/master/docs/BAREMETAL.md)
-
-Don't hesitate to ask questions to our tech team, we can provide assistance if you want to deploy it on another providers (like AWS).
+For any questions or assistance, contact us at tech@keymetrics.io
 
 ## Ressources requirements
 
