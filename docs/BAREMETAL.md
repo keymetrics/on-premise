@@ -1,6 +1,10 @@
 # PM2 EE Baremetal deployment
 
 - [Base Requirements](#base-requirements)
+- [Base Setup](#base-setup)
+- [Startup PM2 Enterprise](#startup-pm2-enterprise)
+- [Configure PM2 Enterprise](#configure-pm2-enterprise)
+- [Update PM2 Enterprise](#update-pm2-enterprise)
 
 ## Base Requirements
 
@@ -25,7 +29,7 @@ docker login
 
 Note that the technical team should have asked you to create a dummy account to be able to access all of your images.
 
-## Setup
+## Base Setup
 
 You have two docker-compose files available, one to expose the app over HTTP and another one over HTTPS.
 
@@ -89,7 +93,7 @@ Once PM2 Enterprise is configured, you must stop the wizard with the following c
 docker-compose stop km-wizard
 ```
 
-### Updating Configuration
+### Update Configuration
 
 You can modify the configuration after the first install, but you must restart all the apps manually after changing the configuration
 
