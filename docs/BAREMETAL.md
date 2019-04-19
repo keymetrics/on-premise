@@ -72,9 +72,9 @@ docker-compose logs
 
 **NOTE**: `instance_address` is the IP or Domain name you want PM2 Enterprise to be exposed on
 
-1- Connect to the Wizard by opening your browser to `<instance_address>/wizard`
-1- Paste your license key provided by the technical team and click on *Go to configuration*.
-1- Add the *public address* as `instance_address`. If you want to use a proxy in front of this instance (like Nginx), you have to configure the address here.
+1. Connect to the Wizard by opening your browser to `<instance_address>/wizard`
+1. Paste your license key provided by the technical team and click on *Go to configuration*.
+1. Add the *public address* as `instance_address`. If you want to use a proxy in front of this instance (like Nginx), you have to configure the address here.
 
 NB: If you use the SSL setup, you must check the advanced configuration in *General/Websocket address* and use `wss` protocol instead of `ws`
 NB: When your installation is complete, you must stop the wizard:
