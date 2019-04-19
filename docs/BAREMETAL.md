@@ -8,12 +8,17 @@
 
 ## Base Requirements
 
-### Minimum recommended versions
+### Information Required
+
+1. You must have been provided a License Key (provided by our team)
+1. Your Docker Hub account must have been allowed to access to PM2 Enterprise Docker Images on the [Keymetrics organization](https://hub.docker.com/u/keymetrics). Images are `km-api-dedicated`, `km-wizard-dedicated` and `noex-enterprise`.
+
+### Software Required
 
 - Docker: 17.12.0 (package: 1.5)
 - Docker-compose: 1.8.0 (package: 1.8.0)
 
-### Install Docker & Docker compose
+### How to install Docker and Docker Compose
 
 ```bash
 sudo wget -qO- https://get.docker.com/ | sh
