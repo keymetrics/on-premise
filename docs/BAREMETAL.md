@@ -32,8 +32,6 @@ Then make sure you have logged-in on the official docker hub to be able to pull 
 docker login
 ```
 
-Note that the technical team should have asked you to create a dummy account to be able to access all of your images.
-
 ## Base Setup
 
 You have two docker-compose files available, one to expose the app over HTTP and another one over HTTPS.
