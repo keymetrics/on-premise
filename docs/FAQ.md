@@ -4,12 +4,6 @@
   </p>
 </details>
 
-<details><summary>Where is the data stored for the applications?</summary>
- <p>
-  Data stored for the applications are stored into Elasticsearch (metrics, traces…)
-  </p>
-</details>
-
 <details><summary>Which ports are used?</summary>
 <p>
  
