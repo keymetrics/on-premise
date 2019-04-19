@@ -1,5 +1,7 @@
 # PM2 EE Baremetal deployment
 
+- [Base Requirements](#base-requirements)
+
 ## Base Requirements
 
 ### Minimum recommended versions
