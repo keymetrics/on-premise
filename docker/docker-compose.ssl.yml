@@ -15,7 +15,7 @@ services:
       - km-front
     volumes:
       - "/etc/ssl:/etc/ssl"
-      
+
   elasticsearch:
     image: elasticsearch:5.5
     restart: always
@@ -27,7 +27,7 @@ services:
     restart: always
     volumes:
       - "mongodata:/data/db"
-      
+
   redis:
     image: redis:5.0
     restart: always
@@ -41,9 +41,9 @@ services:
     environment:
       KM_MONGO_URL: mongodb://mongodb:27017/keymetrics
       KM_REDIS_URL: redis://redis:6379
-      
+
   api:
-    image: keymetrics/km-api-dedicated:latest
+    image: keymetrics/km-api-dedicated:v2.8.8
     restart: always
     links:
       - redis
@@ -58,7 +58,7 @@ services:
       NODE_ENV: "dedicated"
 
   proxy:
-    image: keymetrics/km-api-dedicated:latest
+    image: keymetrics/km-api-dedicated:v2.8.8
     restart: always
     links:
       - redis
@@ -73,7 +73,7 @@ services:
       NODE_ENV: "dedicated"
 
   realtime:
-    image: keymetrics/km-api-dedicated:latest
+    image: keymetrics/km-api-dedicated:v2.8.8
     restart: always
     links:
       - redis
@@ -88,7 +88,7 @@ services:
       NODE_ENV: "dedicated"
 
   digesters:
-    image: keymetrics/km-api-dedicated:latest
+    image: keymetrics/km-api-dedicated:v2.8.8
     restart: always
     links:
       - redis
@@ -103,7 +103,7 @@ services:
       NODE_ENV: "dedicated"
 
   oauth:
-    image: keymetrics/km-api-dedicated:latest
+    image: keymetrics/km-api-dedicated:v2.8.8
     restart: always
     links:
       - redis
@@ -118,7 +118,7 @@ services:
       NODE_ENV: "dedicated"
 
   alert-worker:
-    image: keymetrics/km-api-dedicated:latest
+    image: keymetrics/km-api-dedicated:v2.8.8
     restart: always
     links:
       - redis
@@ -133,7 +133,7 @@ services:
       NODE_ENV: "dedicated"
 
   notification:
-    image: keymetrics/km-api-dedicated:latest
+    image: keymetrics/km-api-dedicated:v2.8.8
     restart: always
     links:
       - redis
@@ -148,7 +148,7 @@ services:
       NODE_ENV: "dedicated"
 
   pre-realtime:
-    image: keymetrics/km-api-dedicated:latest
+    image: keymetrics/km-api-dedicated:v2.8.8
     restart: always
     links:
       - redis
@@ -161,11 +161,11 @@ services:
       KM_MONGO_URL: mongodb://mongodb:27017/keymetrics
       KM_REDIS_URL: redis://redis:6379
       NODE_ENV: "dedicated"
-      
+
   km-front:
     image: keymetrics/noex-enterprise:latest
     restart: always
-    
+
 volumes:
   esdata:
   mongodata:
