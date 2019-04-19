@@ -119,4 +119,38 @@ docker-compose restart
 
 A downtime of around 30 seconds maximum will happen. During this downtimes agents will buffer their data and send them back once the installation is online.
 
+## Connect PM2 Runtime to the On-Premise
+
+Make sure you have created a bucket on your on-premise interface.
+
+### With PM2 Runtime CLI
+Then retrieve the Secret and Public keys and connect PM2 Runtime like that:
+
+```
+KEYMETRICS_NODE=<instance_address> pm2 link <secret> <public> [machine name]
+```
+
+### With PM2 Standalone Agent
+
+If you use the PM2 Standalone Agent, first make sure that you have installed the `@pm2/io` module and you have required it at the very beggining of your Node.js application:
+
+```javascript
+const io = require('@pm2/io').init({
+  standalone: true,                       // mandatory
+  apmOptions: {
+    publicKey: process.env.KM_PUBLIC_KEY,   // define the public key given in the dashboard
+    secretKey: process.env.KM_SECRET_KEY,   // define the private key given in the dashboard
+    appName: process.env.KM_APP_NAME       // define an application name
+  }
+})
+```
+
+And make sur the `KEYMETRICS_NODE` variable is exposed when starting your Node.js app:
+
+```bash
+KEYMETRICS_NODE=<instance_address> node app.js
+```
+
+
+
 
