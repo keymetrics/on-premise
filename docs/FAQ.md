@@ -4,12 +4,11 @@
   </p>
 </details>
 
-<details><summary>Which ports are used?</summary>
+<details><summary>Which are the required ports to be exposed Publicly?</summary>
 <p>
  
-- http API on port 3010 (access the data, configure bucket etc)
-- auth service on port 3100 (register/login etc)
-- websocket service on port 4010 (so the frontend can receive update in realtime)
+- If you use PM2 Enterprise with the HTTP configuration, the port 80 is the only one needed
+- If you use PM2 Enterprise with the HTTPs configutation, the port 443 is the only one needed
  </p>
 </details>
 
