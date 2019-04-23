@@ -114,7 +114,8 @@ docker-compose restart
 To get the latest updates, you just have to run docker-compose up again and it will pull the latest backend image:
 
 ```bash
-docker pull keymetrics/km-wizard-dedicated keymetrics/km-api-dedicated keymetrics/noex-enterprise
+cd /folder/containing/docker-compose.yml
+docker-compose pull
 ```
 
 A downtime of around 30 seconds maximum will happen. During this downtimes agents will buffer their data and send them back once the installation is online.
