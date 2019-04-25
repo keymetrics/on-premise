@@ -6,6 +6,7 @@
 - [Configure PM2 Enterprise](#configure-pm2-enterprise)
 - [Update PM2 Enterprise](#update-pm2-enterprise)
 - [Connect PM2 Runtime to the On-Premise](#connect-pm2-runtime-to-the-on-premise)
+- [FAQ](#faq)
 
 ## Base Requirements
 
@@ -114,7 +115,8 @@ docker-compose restart
 To get the latest updates, you just have to run docker-compose up again and it will pull the latest backend image:
 
 ```bash
-docker pull keymetrics/km-wizard-dedicated keymetrics/km-api-dedicated keymetrics/noex-enterprise
+cd /folder/containing/docker-compose.yml
+docker-compose pull
 ```
 
 A downtime of around 30 seconds maximum will happen. During this downtimes agents will buffer their data and send them back once the installation is online.
@@ -151,6 +153,9 @@ And make sur the `KEYMETRICS_NODE` variable is exposed when starting your Node.j
 KEYMETRICS_NODE=<instance_address> node app.js
 ```
 
+## FAQ
+
+[The FAQ is here](https://github.com/keymetrics/on-premise/blob/master/docs/FAQ.md)
 
 
 
