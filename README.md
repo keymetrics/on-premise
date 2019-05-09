@@ -3,8 +3,6 @@
 ![PM2 Enterprise logo](https://pm2.io/_nuxt/img/f0a5c4e.svg)
 
 - [Deploy to VM or Baremetal Machines](https://github.com/keymetrics/on-premise/blob/master/docs/BAREMETAL.md)
-- [Deploy to Kubernetes with Helm](https://github.com/keymetrics/on-premise/blob/master/docs/HELM.md)
-- [Deploy to GKE (Google Cloud Platform Managed Kubernetes) with Terraform & Helm](https://github.com/keymetrics/on-premise/blob/master/docs/GCP.md)
 
 For any questions or assistance, contact us at tech@keymetrics.io
 
