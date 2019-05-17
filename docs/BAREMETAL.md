@@ -152,6 +152,22 @@ And make sur the `KEYMETRICS_NODE` variable is exposed when starting your Node.j
 KEYMETRICS_NODE=<instance_address> node app.js
 ```
 
+### Using a proxy with the Agent
+
+Agents supports connection [proxying](https://github.com/keymetrics/pm2-io-agent/commit/ce487355911ae89c8d914ddb15e1428920a06c1a).
+
+With PM2:
+
+```bash
+PM2_PROXY=http://168.63.43.102:3128 pm2 link
+```
+
+With standalone agent:
+
+```bash
+PM2_PROXY=http://168.63.43.102:3128 node app.js
+```
+
 ## FAQ
 
 [The FAQ is here](https://github.com/keymetrics/on-premise/blob/master/docs/FAQ.md)
