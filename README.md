@@ -1,7 +1,5 @@
 # PM2 Enterprise On-Premise
 
-![PM2 Enterprise logo](https://pm2.io/_nuxt/img/f0a5c4e.svg)
-
 - [Deploy to VM or Baremetal Machines](https://github.com/keymetrics/on-premise/blob/master/docs/BAREMETAL.md)
 
 For any questions or assistance, contact us at tech@keymetrics.io
