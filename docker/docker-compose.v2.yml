@@ -1,0 +1,64 @@
+version: '2'
+
+services:
+  nginx:
+    image: keymetrics/km-nginx:dedicated
+    restart: always
+    ports:
+      - "80:80"
+    links:
+      - km-wizard
+      - api
+      - proxy
+      - oauth
+      - realtime
+      - km-front
+
+  elasticsearch:
+    image: elasticsearch:5.5
+    restart: always
+    volumes:
+      - "esdata:/usr/share/elasticsearch/data"
+
+  mongodb:
+    image: mongo:3.6.16
+    restart: always
+    volumes:
+      - "mongodata:/data/db"
+
+  redis:
+    image: redis:5
+    restart: always
+
+  km-wizard:
+    image: keymetrics/km-wizard-dedicated
+    restart: always
+    links:
+      - redis
+      - mongodb
+    environment:
+      KM_MONGO_URL: mongodb://mongodb:27017/keymetrics
+      KM_REDIS_URL: redis://redis:6379
+
+  backend:
+    image: keymetrics/km-api-dedicated:latest
+    restart: always
+    links:
+      - redis
+      - elasticsearch
+      - mongodb
+    command: pm2-runtime dedicated.config.js
+    environment:
+      KM_ELASTICSEARCH_HOST: elasticsearch:9200
+      KM_ELASTIC_VERSION: '5.5'
+      KM_MONGO_URL: mongodb://mongodb:27017/keymetrics
+      KM_REDIS_URL: redis://redis:6379
+      NODE_ENV: "dedicated"
+
+  km-front:
+    image: keymetrics/noex-enterprise:latest
+    restart: always
+
+volumes:
+  esdata:
+  mongodata:

@@ -13,7 +13,7 @@ services:
       - oauth
       - realtime
       - km-front
-      
+
   elasticsearch:
     image: elasticsearch:5.5
     restart: always
@@ -21,11 +21,11 @@ services:
       - "esdata:/usr/share/elasticsearch/data"
 
   mongodb:
-    image: mongo:3.4
+    image: mongo:3.6.16
     restart: always
     volumes:
       - "mongodata:/data/db"
-      
+
   redis:
     image: redis:5.0
     restart: always
@@ -39,7 +39,7 @@ services:
     environment:
       KM_MONGO_URL: mongodb://mongodb:27017/keymetrics
       KM_REDIS_URL: redis://redis:6379
-      
+
   api:
     image: keymetrics/km-api-dedicated:latest
     restart: always
@@ -159,11 +159,11 @@ services:
       KM_MONGO_URL: mongodb://mongodb:27017/keymetrics
       KM_REDIS_URL: redis://redis:6379
       NODE_ENV: "dedicated"
-      
+
   km-front:
     image: keymetrics/noex-enterprise:latest
     restart: always
-    
+
 volumes:
   esdata:
   mongodata:
