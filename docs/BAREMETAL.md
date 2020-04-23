@@ -17,14 +17,14 @@
 
 ### Software Required
 
-- Docker: 17.12.0 (package: 1.5)
-- Docker-compose: 1.8.0 (package: 1.8.0)
+- Docke > 17.12.0
+- Docker-compose > 1.8.0
 
 ### How to install Docker and Docker Compose
 
 ```bash
 sudo wget -qO- https://get.docker.com/ | sh
-sudo curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+sudo curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 ```
 
@@ -87,7 +87,6 @@ docker-compose logs
 1. Paste your license key provided by the technical team and click on *Go to configuration*.
 1. Add the *public address* as `instance_address`. If you want to use a proxy in front of this instance (like Nginx), you have to configure the address here.
 
-NB: If you use the SSL setup, you must check the advanced configuration in *General/Websocket address* and use `wss` protocol instead of `ws`
 NB: When your installation is complete, you must stop the wizard:
 
 ### Disabling the Wizard
@@ -151,6 +150,22 @@ And make sur the `KEYMETRICS_NODE` variable is exposed when starting your Node.j
 
 ```bash
 KEYMETRICS_NODE=<instance_address> node app.js
+```
+
+### Using a proxy with the Agent
+
+Agents supports connection [proxying](https://github.com/keymetrics/pm2-io-agent/commit/ce487355911ae89c8d914ddb15e1428920a06c1a).
+
+With PM2:
+
+```bash
+PM2_PROXY=http://168.63.43.102:3128 pm2 link
+```
+
+With standalone agent:
+
+```bash
+PM2_PROXY=http://168.63.43.102:3128 node app.js
 ```
 
 ## FAQ
