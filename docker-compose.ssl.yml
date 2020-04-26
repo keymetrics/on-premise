@@ -1,0 +1,63 @@
+version: '2'
+
+services:
+  nginx:
+    image: keymetrics/km-nginx-ssl
+    restart: always
+    ports:
+      - "443:443"
+    links:
+      - km-wizard
+      - pm2-io-enterprise-back
+      - pm2-io-enterprise-front
+    volumes:
+      - "/etc/ssl:/etc/ssl"
+
+  elasticsearch:
+    image: elasticsearch:5.5
+    restart: always
+    volumes:
+      - "esdata:/usr/share/elasticsearch/data"
+
+  mongodb:
+    image: mongo:3.6.16
+    restart: always
+    volumes:
+      - "mongodata:/data/db"
+
+  redis:
+    image: redis:5
+    restart: always
+
+  km-wizard:
+    image: keymetrics/km-wizard-dedicated
+    restart: always
+    links:
+      - redis
+      - mongodb
+    environment:
+      KM_MONGO_URL: mongodb://mongodb:27017/keymetrics
+      KM_REDIS_URL: redis://redis:6379
+
+  pm2-io-enterprise-back:
+    image: keymetrics/pm2-io-enterprise-back:latest
+    restart: always
+    links:
+      - redis
+      - elasticsearch
+      - mongodb
+    command: pm2-runtime dedicated.config.js
+    environment:
+      KM_ELASTICSEARCH_HOST: elasticsearch:9200
+      KM_ELASTIC_VERSION: '5.5'
+      KM_MONGO_URL: mongodb://mongodb:27017/keymetrics
+      KM_REDIS_URL: redis://redis:6379
+      NODE_ENV: "dedicated"
+
+  pm2-io-enterprise-front:
+    image: keymetrics/pm2-io-enterprise-front:latest
+    restart: always
+
+volumes:
+  esdata:
+  mongodata:

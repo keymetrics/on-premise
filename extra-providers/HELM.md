@@ -30,9 +30,9 @@ helm delete my-release
 
 | Parameter                               | Description                                                                                  | Default                                     |
 | --------------------------------------- | -------------------------------------------------------------------------------------------- | ------------------------------------------- |
-| `imageApi` | API image | `keymetrics/km-api-dedicated` |
+| `imageApi` | API image | `keymetrics/pm2-io-enterprise-back` |
 | `imageTagApi` | API image tag | `latest` |
-| `imageFront` | Frontend image | `keymetrics/noex-enterprise` |
+| `imageFront` | Frontend image | `keymetrics/pm2-io-enterprise-front` |
 | `imageTagFront` | Front image tag | `latest` |
 | `imageWizard` | Wizard image (used only at installation) | `keymetrics/km-wizard-dedicated` |
 | `imageTagWizard` | Wizard image tag | `latest` |

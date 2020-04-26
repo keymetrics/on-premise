@@ -1,24 +1,109 @@
 # PM2 Enterprise On-Premise
 
-- [Deploy to VM or Baremetal Machines](https://github.com/keymetrics/on-premise/blob/master/docs/BAREMETAL.md)
+## Install
 
-For any questions or assistance, contact us at tech@keymetrics.io
+### 1/ Get the License Key
 
-## Ressources requirements
+Ask us a license key [sales@keymetrics.io](sales@keymetrics.io)
 
-In terms of the requirements itself, it really depends of how much agents you will need to connect.
+### 2/ Install Docker and Docker Compose
 
-- For 1 to 100 agents you will need a 4 CPUs, 8gb RAM and 100GB SSD machine.
-- For 100 to 300 agents you will need a 8 CPUs, 16gb RAM and 256GB SSD machine. 
-- For 300 to 500 agents you will need a 8/12 CPUs, 32gb RAM and 256GB SSD machine. 
+```bash
+sudo wget -qO- https://get.docker.com/ | sh
+sudo curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+```
 
-Approximate resource usage break up for 500 agents in average (maximum ~1000 in burst):
-- Elasticsearch (that would be the biggest VM that you will need, we advise to use 16G of RAM for it and at least 4 CPU and a good persistent storage, if possible SSD)
-- Redis (at least 4G of RAM and 1 CPU)
-- Mongodb (500Mb of RAM and 1 CPU is enough and persistent storage)
-- For the applications themselves, we advise at least 10G of RAM and 12 CPU for all applications.
+### 3/ Get the docker-compose.yml file & Start PM2.io EE
 
-## Issues
+```bash
+wget https://raw.githubusercontent.com/keymetrics/on-premise/master/docker-compose.yml
+docker-compose up -d
+```
 
-- Sales: sales@keymetrics.io
-- Technical: tech@keymetrics.io
+### 4/ Connect to the Wizard
+
+Go to http://server-ip-address/wizard
+
+Required:
+
+- Set the license key
+- Set the address to access to the PM2.io interface
+- Set the SMTP server to receive notifications
+
+Optional:
+
+- LDAP, Github login, Google login...
+
+### 5/ Disable Wizard
+
+```bash
+docker-compose stop km-wizard
+```
+
+### 6/ Connect
+
+Now open the url http://server-ip-address/, create an account and you are ready to go.
+
+## FAQ
+
+### How do I run the interface with SSL?
+
+Instead of the [default docker-compose.yml file](https://raw.githubusercontent.com/keymetrics/on-premise/master/docker-compose.yml) use the [docker-compose.yml with ssl enabled](https://raw.githubusercontent.com/keymetrics/on-premise/master/docker-compose-ssl.yml)
+
+Then SSL certificates which is running PM2 Enterprise on these path:
+- Your private certificate on the path `/etc/ssl/pm2-ssl-certificate.crt`
+- Your private key on the path `/etc/ssl/pm2-ssl-certificate.key`
+
+If you want to use a custom proxy, you can find the nginx configuration that we use [here](https://github.com/keymetrics/on-premise/blob/master/km-nginx-dockerfile/nginx.conf) to configure the correct redirection for each service.
+
+### How do I block new registration?
+
+Start the wizard again:
+
+```bash
+docker-compose start km-wizard
+```
+
+Go to http://server-ip-address/wizard, edit the coniguration and restart all application with:
+
+```bash
+docker-compose restart
+```
+
+Do not forget to stop km-wizard once configuration is finished
+
+### How do I update PM2.io EE?
+
+Go back to the folder containing the docker-compose.yml you wget'ed and run:
+
+```bash
+docker-compose pull
+```
+
+### How do I run PM2 Agent behind a corporate proxy?
+
+Just set the `PM2_PROXY` environment variable with the proxy address.
+
+Example:
+
+```bash
+KEYMETRICS_NODE=<server-ip-address> PM2_PROXY=<proxy-address> pm2 link <secret> <public>
+```
+
+### What are the minium resources required to run PM2.io EE?
+
+For 1 to 100 agents you will need at least a VM with 4 CPUs, 8gb RAM and 30GB SSD.
+
+### Where is the data stored?
+
+Data is stored within Elasticsearch. Make sure you do not wipe Elasticsearch data.
+
+### Which ports must be opened for PM2 to communicate with PM2.io EE?
+
+Port 443
+
+### Other question
+
+Tech: tech@keymetrics.io
+Sales: sales@keymetrics.io

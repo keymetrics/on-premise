@@ -4,11 +4,11 @@
 
 replicaCount: 1
 
-imageApi: keymetrics/km-api-dedicated
+imageApi: keymetrics/pm2-io-enterprise-back
 # Tag different (compatibility with Mongo 4)
 imageTagApi: latest
 
-imageFront: keymetrics/noex-enterprise
+imageFront: keymetrics/pm2-io-enterprise-front
 imageTagFront: latest
 
 imageWizard: keymetrics/km-wizard-dedicated
