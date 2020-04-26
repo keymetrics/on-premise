@@ -17,7 +17,7 @@
 
 ### Software Required
 
-- Docke > 17.12.0
+- Docker > 17.12.0
 - Docker-compose > 1.8.0
 
 ### How to install Docker and Docker Compose
@@ -171,6 +171,3 @@ PM2_PROXY=http://168.63.43.102:3128 node app.js
 ## FAQ
 
 [The FAQ is here](https://github.com/keymetrics/on-premise/blob/master/docs/FAQ.md)
-
-
-

@@ -8,11 +8,8 @@ services:
       - "80:80"
     links:
       - km-wizard
-      - api
-      - proxy
-      - oauth
-      - realtime
-      - km-front
+      - pm2-io-enterprise-back
+      - pm2-io-enterprise-front
 
   elasticsearch:
     image: elasticsearch:5.5
@@ -40,8 +37,8 @@ services:
       KM_MONGO_URL: mongodb://mongodb:27017/keymetrics
       KM_REDIS_URL: redis://redis:6379
 
-  backend:
-    image: keymetrics/km-api-dedicated:latest
+  pm2-io-enterprise-back:
+    image: keymetrics/pm2-io-enterprise-back:latest
     restart: always
     links:
       - redis
@@ -55,8 +52,8 @@ services:
       KM_REDIS_URL: redis://redis:6379
       NODE_ENV: "dedicated"
 
-  km-front:
-    image: keymetrics/noex-enterprise:latest
+  pm2-io-enterprise-front:
+    image: keymetrics/pm2-io-enterprise-front:latest
     restart: always
 
 volumes:
