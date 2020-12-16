@@ -2,7 +2,7 @@ version: '2'
 
 services:
   nginx:
-    image: keymetrics/km-nginx:dedicated
+    image: keymetrics/km-nginx:latest
     restart: always
     ports:
       - "80:80"
