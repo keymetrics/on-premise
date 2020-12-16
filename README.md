@@ -79,6 +79,7 @@ Go back to the folder containing the docker-compose.yml you wget'ed and run:
 
 ```bash
 docker-compose pull
+docker-compose restart
 ```
 
 ### How do I run PM2 Agent behind a corporate proxy?
