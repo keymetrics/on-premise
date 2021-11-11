@@ -18,13 +18,13 @@ services:
       - "esdata:/usr/share/elasticsearch/data"
 
   mongodb:
-    image: mongo:3.6.16
+    image: mongo:4.0.22
     restart: always
     volumes:
       - "mongodata:/data/db"
 
   redis:
-    image: redis:5
+    image: redis:6
     restart: always
 
   km-wizard:
