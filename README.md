@@ -6,19 +6,23 @@
 
 Ask us a license key [sales@keymetrics.io](sales@keymetrics.io)
 
-### 2/ Install Docker and Docker Compose
+### 2/ Install Docker
 
 ```bash
 sudo wget -qO- https://get.docker.com/ | sh
-sudo curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
+```
+
+Docker Compose is included as a plugin with Docker Engine. Verify installation with:
+
+```bash
+docker compose version
 ```
 
 ### 3/ Get the docker-compose.yml file & Start PM2.io EE
 
 ```bash
 wget https://raw.githubusercontent.com/keymetrics/on-premise/master/docker-compose.yml
-docker-compose up -d
+docker compose up -d
 ```
 
 ### 4/ Connect to the Wizard
@@ -38,7 +42,7 @@ Optional:
 ### 5/ Disable Wizard
 
 ```bash
-docker-compose stop km-wizard
+docker compose stop km-wizard
 ```
 
 ### 6/ Connect
@@ -62,13 +66,13 @@ If you want to use a custom proxy, you can find the nginx configuration that we 
 Start the wizard again:
 
 ```bash
-docker-compose start km-wizard
+docker compose start km-wizard
 ```
 
 Go to http://server-ip-address/wizard, edit the coniguration and restart all application with:
 
 ```bash
-docker-compose restart
+docker compose restart
 ```
 
 Do not forget to stop km-wizard once configuration is finished
@@ -78,8 +82,8 @@ Do not forget to stop km-wizard once configuration is finished
 Go back to the folder containing the docker-compose.yml you wget'ed and run:
 
 ```bash
-docker-compose pull
-docker-compose up --detach --build
+docker compose pull
+docker compose up --detach --build
 ```
 
 ### How do I run PM2 Agent behind a corporate proxy?
